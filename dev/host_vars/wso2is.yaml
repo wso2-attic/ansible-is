@@ -15,11 +15,36 @@
 #----------------------------------------------------------------------------
 
 ---
-clustering:
-  enabled: true
-  localMemberHost: "172.28.128.5"
-  members:
-    -
-      hostName: "172.28.128.4"
-    -
-      hostName: "172.28.128.5"
+axis2:
+  clustering:
+    enabled: "false"
+    localMemberHost: "172.28.128.4"
+    localMemberPort: "4000"
+    members:
+      -
+        hostName: "172.28.128.4"
+        port: "4000"
+      -
+        hostName: "172.28.128.5"
+        port: "4000"
+      groupManagement: "enable"
+
+carbon:
+  hostname: localhost
+  mgt_hostname: localhost
+
+catalina_server:
+
+identity:
+
+authentication_data:
+
+role_data:
+
+session_data:
+
+user_data:
+
+registry:
+
+user_mgt:
