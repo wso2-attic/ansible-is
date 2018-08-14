@@ -16,8 +16,15 @@
 ---
 -
   become: true
-  become_user: "{{wso2_user}}"
+  become_user: root
   block:
+    - name: Create WSO2 directory
+      file:
+        path: /opt/wso2
+        state: directory
+        mode: "u=rw,g=wx,o=rwx"
+      when: "(inventory_hostname in groups['is'])"
+
     - name: Copy the Debian package of WSO2 Identity Server
       copy:
         src: "{{product_package_location}}/{{product_archive_deb}}"
@@ -26,7 +33,7 @@
       state: absent
       when: ansible_distribution == "Ubuntu"
 
-    - name: Copy the Debian package of WSO2 Identity Server
+    - name: Copy the RPM package of WSO2 Identity Server
       copy:
         src: "{{product_package_location}}/{{product_archive_rpm}}"
         dest: "{{product_path}}/{{product_archive_rpm}}"
@@ -85,11 +92,26 @@
     #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/user-mgt.xml"
     #   when: "(inventory_hostname in groups['is'])"
 
-    # - name: reload systemctl
-    #   command: systemctl daemon-reload
-    #   become: yes
+    - name: "Copy wso2server.sh"
+      template:
+        src: "wso2server.sh.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/bin/wso2server.sh"
+      when: "(inventory_hostname in groups['is'])"
 
-    - name: Start WSO2 Identity Server
-      shell: |
-        sh /usr/lib/wso2/wso2is/5.6.0/bin/wso2server.sh start
+    - name: "Copy WSO2IS service file"
+      template:
+        src: "wso2is.service.j2"
+        dest: "{{systemd_path}}/wso2is.service"
+      when: "(inventory_hostname in groups['is'])"
 
+    - name: "Reload systemctl daemon"
+      command: systemctl daemon-reload
+      become: yes
+
+    - name: "Start wso2-is as a service"
+      command: systemctl start wso2is
+      become: yes
+
+    # - name: Start WSO2 Identity Server
+    #   shell: |
+    #     sh /usr/lib/wso2/wso2is/5.6.0/bin/wso2server.sh start
