@@ -91,5 +91,5 @@
 
     - name: Start WSO2 Identity Server
       shell: |
-        sh /usr/lib/WSO2/Identity-Server/5.6.0/bin/wso2server.sh start
+        sh /usr/lib/wso2/wso2is/5.6.0/bin/wso2server.sh start
 
