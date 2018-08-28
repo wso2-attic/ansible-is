@@ -44,12 +44,12 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <HostName>{{carbon.hostname}}</HostName>
+    <HostName>{{ carbon.hostname }}</HostName>
 
     <!--
     Host name to be used for the Carbon management console
     -->
-    <MgtHostName>{{carbon.mgt_hostname}}</MgtHostName>
+    <MgtHostName>{{ carbon.mgt_hostname }}</MgtHostName>
 
     <!--
         The URL of the back end server. This is where the admin services are hosted and
@@ -124,7 +124,7 @@
          the define value + Offset.
          e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
          -->
-        <Offset>0</Offset>
+        <Offset>{{ carbon.port_offset }}</Offset>
 
         <!-- The JMX Ports -->
         <JMX>
@@ -363,15 +363,15 @@
         -->
         <KeyStore>
             <!-- Keystore file location-->
-            <Location>${carbon.home}/repository/resources/security/wso2carbon.jks</Location>
+            <Location>{{ carbon.keystore.location }}</Location>
             <!-- Keystore type (JKS/PKCS12 etc.)-->
-            <Type>JKS</Type>
+            <Type>{{ carbon.keystore.type }}</Type>
             <!-- Keystore password-->
-            <Password>wso2carbon</Password>
+            <Password>{{ carbon.keystore.password }}</Password>
             <!-- Private Key alias-->
-            <KeyAlias>wso2carbon</KeyAlias>
+            <KeyAlias>{{ carbon.keystore.key_alias }}</KeyAlias>
             <!-- Private Key password-->
-            <KeyPassword>wso2carbon</KeyPassword>
+            <KeyPassword>{{ carbon.keystore.key_password }}</KeyPassword>
         </KeyStore>
 
         <!--
@@ -380,11 +380,11 @@
         -->
         <TrustStore>
             <!-- trust-store file location -->
-            <Location>${carbon.home}/repository/resources/security/client-truststore.jks</Location>
+            <Location>{{ carbon.truststore.location }}</Location>
             <!-- trust-store type (JKS/PKCS12 etc.) -->
-            <Type>JKS</Type>
+            <Type>{{ carbon.truststore.type }}</Type>
             <!-- trust-store password -->
-            <Password>wso2carbon</Password>
+            <Password>{{ carbon.truststore.password }}</Password>
         </TrustStore>
 
         <!--

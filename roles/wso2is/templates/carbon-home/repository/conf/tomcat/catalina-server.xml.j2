@@ -16,7 +16,8 @@
   limitations under the License.
 -->
 
-<Server port="8005" shutdown="SHUTDOWN">
+<Server {{ catalina_server.secure_vault.enable | default() }} port={{ catalina_server.secure_vault.port }}
+  shutdown={{ catalina_server.secure_vault.shutdown }}>
 
     <Service className="org.wso2.carbon.tomcat.ext.service.ExtendedStandardService" name="Catalina">
 
@@ -27,16 +28,17 @@
         -->
         <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
                    port="9763"
+                   {{ catalina_server.connector.proxy_port_http | default() }}
                    redirectPort="9443"
                    bindOnInit="false"
                    maxHttpHeaderSize="8192"
                    acceptorThreadCount="2"
-                   maxThreads="250"
+                   maxThreads={{ catalina_server.connector.max_threads }}
                    minSpareThreads="50"
                    disableUploadTimeout="false"
                    connectionUploadTimeout="120000"
                    maxKeepAliveRequests="200"
-                   acceptCount="200"
+                   acceptCount={{ catalina_server.connector.accept_count }}
                    server="WSO2 Carbon Server"
                    compression="on"
                    compressionMinSize="2048"
@@ -52,6 +54,7 @@
         -->
         <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
                    port="9443"
+                   {{ catalina_server.connector.proxy_port_https | default() }}
                    bindOnInit="false"
                    sslProtocol="TLS"
                    sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
@@ -73,8 +76,8 @@
                    compressionMinSize="2048"
                    noCompressionUserAgents="gozilla, traviata"
                    compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
-                   keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
-                   keystorePass="wso2carbon"
+                   keystoreFile="{{carbon.keystore.location}}"
+                   keystorePass="{{carbon.keystore.password}}"
                    URIEncoding="UTF-8"/>
 
 
@@ -93,7 +96,7 @@
                        pattern="combined"/>
                 <Valve className="org.wso2.carbon.tomcat.ext.valves.CarbonStuckThreadDetectionValve" threshold="600"/>
                 <Valve className="org.wso2.carbon.tomcat.ext.valves.CompositeValve"/>
-		
+
 		<!-- Authentication and Authorization valve for the rest apis and we can configure context for this in identity.xml  -->
                 <Valve className="org.wso2.carbon.identity.auth.valve.AuthenticationValve"/>
                 <Valve className="org.wso2.carbon.identity.authz.valve.AuthorizationValve"/>
@@ -104,4 +107,3 @@
         </Engine>
     </Service>
 </Server>
-

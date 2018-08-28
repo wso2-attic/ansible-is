@@ -58,45 +58,62 @@
       state: absent
 
 # Copy configuration file changes to the installed directory
-    # - name: "Create Master Datasource.xml"
-    #   template:
-    #     src: "master-datasources.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/datasources/master-datasources.xml"
-    #   when: "(inventory_hostname in groups['is'])"
 
-    # - name: "Copy Carbon.xml"
-    #   template:
-    #     src: "carbon.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/carbon.xml"
+    - name: "Copy master-datasource.xml"
+      template:
+        src: "carbon-home/repository/conf/datasources/master-datasources.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/datasources/master-datasources.xml"
+      when: "(inventory_hostname in groups['is'])"
 
-    # - name: "Copy Registry.xml"
-    #   template:
-    #     src: "registry.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/registry.xml"
-    #   when: "(inventory_hostname in groups['is'])"
+    - name: "Copy identity.xml"
+      template:
+        src: "carbon-home/repository/conf/identity/identity.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/identity/identity.xml"
+      when: "(inventory_hostname in groups['is'])"
 
-    # - name: "Copy axis2.xml"
-    #   template:
-    #     src: "axis2.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/axis2/axis2.xml"
+    - name: "Copy carbon.xml"
+      template:
+        src: "carbon-home/repository/conf/carbon.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/carbon.xml"
 
-    # - name: "Copy catalina-server.xml"
-    #   template:
-    #     src: "catalina-server.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/tomcat/catalina-server.xml"
-    #   when: "(inventory_hostname in groups['is'])"
+    - name: "Copy registry.xml"
+      template:
+        src: "carbon-home/repository/conf/registry.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/registry.xml"
+      when: "(inventory_hostname in groups['is'])"
 
-    # - name: "Copy user-mgt.xml"
-    #   template:
-    #     src: "user-mgt.xml.j2"
-    #     dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/user-mgt.xml"
-    #   when: "(inventory_hostname in groups['is'])"
+    - name: "Copy axis2.xml"
+      template:
+        src: "carbon-home/repository/conf/axis2/axis2.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/axis2/axis2.xml"
+
+    - name: "Copy catalina-server.xml"
+      template:
+        src: "carbon-home/repository/conf/tomcat/catalina-server.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/tomcat/catalina-server.xml"
+      when: "(inventory_hostname in groups['is'])"
+
+    - name: "Copy user-mgt.xml"
+      template:
+        src: "carbon-home/repository/conf/user-mgt.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/conf/user-mgt.xml"
+      when: "(inventory_hostname in groups['is'])"
+
+    - name: "Copy IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2"
+        dest: "{{setup_path}}/{{product_name}}/{{product_version}}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
+      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy wso2server.sh"
       template:
-        src: "wso2server.sh.j2"
+        src: "carbon-home/bin/wso2server.sh.j2"
         dest: "{{setup_path}}/{{product_name}}/{{product_version}}/bin/wso2server.sh"
       when: "(inventory_hostname in groups['is'])"
+
+# Enable customization by uncommenting the following and adding the changes to
+# the customize.yml
+    # - import_tasks: customize.yml
 
     - name: "Copy WSO2IS service file"
       template:
@@ -111,7 +128,3 @@
     - name: "Start wso2-is as a service"
       command: systemctl start wso2is
       become: yes
-
-    # - name: Start WSO2 Identity Server
-    #   shell: |
-    #     sh /usr/lib/wso2/wso2is/5.6.0/bin/wso2server.sh start
