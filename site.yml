@@ -19,6 +19,12 @@
 
 - name: WSO2 Identity Server
   hosts: all
-  remote_user: vagrant
+  become: yes
+
+  # Please note that the remote_user will change based on the nodes.
+  # Ex: If you use a Vagrant box to host the Identity server node, configuration
+  # is as follows.
+  # remote_user: vagrant
+  remote_user: ubuntu
   roles:
     - role: wso2is
