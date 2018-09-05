@@ -16,8 +16,8 @@
 
 # Add configs for the custom files that are needed to be copied/replaced here.
 # An example is provided below.
-# - name: "Copy cutom file"
+# - name: "Copy custom file"
 #   template:
 #     src: path/to/example/file/example.xml.j2
-#     dest: desttination/example.xml.j2
-#   when:
+#     dest: destination/example.xml.j2
+#   when: "(inventory_hostname in groups['is'])"
