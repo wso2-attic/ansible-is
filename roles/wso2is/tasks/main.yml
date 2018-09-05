@@ -31,7 +31,7 @@
         dest: "{{product_path}}/{{product_archive_deb}}"
         mode: u=rw,g=r,o=r
       state: absent
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_os_family == "Debian"
 
     - name: Copy the RPM package of WSO2 Identity Server
       copy:
@@ -39,17 +39,17 @@
         dest: "{{product_path}}/{{product_archive_rpm}}"
         mode: u=rw,g=r,o=r
       state: absent
-      when: ansible_distribution == "CentOS"
+      when: ansible_os_family == "RedHat"
 
     - name: Install a .deb package
       apt:
         deb: "{{product_path}}/{{product_archive_deb}}"
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_os_family == "Debian"
 
     - name: Install a .rpm package
       apt:
         deb: "{{product_path}}/{{product_archive_rpm}}"
-      when: ansible_distribution == "CentOS"
+      when: ansible_os_family == "RedHat"
 
     - name: "Copy JDBC Driver"
       copy:
