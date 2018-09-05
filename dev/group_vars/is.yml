@@ -59,7 +59,6 @@ wso2_identity_db:
   username: wso2carbon
   password: wso2carbon
 
-
 wso2_consent_db:
   driver_class_name: org.h2.Driver
   url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000

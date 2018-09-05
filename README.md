@@ -70,7 +70,11 @@ Copy the following files to `ansible-is/files` directory.
 ## Running WSO2 Identity Server Ansible scripts
 
 ### 1. Run the existing scripts without customization
-The existing Ansible scripts contain the configurations to set-up a single node WSO2 Identity Server pattern. In order to deploy the pattern, you need to replace the IP address(172.28.128.4) given in the `inventory` file under `dev` folder by the IP of the location where you need to host the Identity Server.
+The existing Ansible scripts contain the configurations to set-up a single node WSO2 Identity Server pattern. In order to deploy the pattern, you need to replace the `[ip_address]` given in the `inventory` file under `dev` folder by the IP of the location where you need to host the Identity Server. An example is given below.
+```
+[is]
+wso2is ansible_host=172.28.128.4
+```
 
 Run the following command to run the scripts.
 

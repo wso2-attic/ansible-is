@@ -1,2 +1,2 @@
 [is]
-wso2is ansible_host=172.28.128.4
+wso2is ansible_host=[ip_address]
