@@ -17,7 +17,8 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   ├── group_vars
 │   │   └── is.yml
 │   ├── host_vars
-│   │   └── wso2is.yml
+│   │   ├── is_1.yml
+│   │   └── is_2.yml
 │   └── inventory
 ├── docs
 │   ├── images
@@ -33,7 +34,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 ├── pull_request_template.md
 ├── README.md
 ├── roles
-│   └── wso2is
+│   └── is
 │       ├── tasks
 │       │   ├── custom.yml
 │       │   └── main.yml
