@@ -15,8 +15,9 @@
 #----------------------------------------------------------------------------
 ---
 -
-  become: true
-  become_user: {{ wso2_user }}
+  become: yes
+  become_user: "{{ wso2_user }}"
+  become_method: enable
   block:
     - name: Create WSO2 directory
       file:
@@ -103,6 +104,24 @@
       template:
         src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
+      when: "(inventory_hostname in groups['is'])"
+
+    - name: "Copy IsAnalytics-Publisher-wso2event-RoleDataa.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml"
+      when: "(inventory_hostname in groups['is'])"
+
+    - name: "Copy IsAnalytics-Publisher-wso2event-SessionData.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml"
+      when: "(inventory_hostname in groups['is'])"
+
+    - name: "Copy IsAnalytics-Publisher-wso2event-UserData.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml"
       when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy wso2server.sh"

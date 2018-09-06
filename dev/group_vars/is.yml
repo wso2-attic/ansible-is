@@ -1,4 +1,4 @@
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 #  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,10 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 wso2_group: wso2
-wso2_user: root
+wso2_user: wso2carbon
 setup_path: /usr/lib/wso2
 product_name: wso2is
 product_version: 5.6.0
@@ -34,12 +34,6 @@ jvm:
 user:
   username: admin
   password: admin
-
-wso2_carbon_db:
-  driver_class_name: org.h2.Driver
-  url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-  username: wso2carbon
-  password: wso2carbon
 
 wso2_reg_db:
   driver_class_name: org.h2.Driver
@@ -64,3 +58,28 @@ wso2_consent_db:
   url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
   username: wso2carbon
   password: wso2carbon
+
+# KeyStore which will be used for encrypting/decrypting passwords and other sensitive information.
+keystore:
+  location: ${carbon.home}/repository/resources/security/wso2carbon.jks
+  type: JKS
+  password: wso2carbon
+  key_alias: wso2carbon
+  key_password: wso2carbon
+
+# System wide trust-store which is used to maintain the certificates of all the trusted parties.
+truststore:
+  location: ${carbon.home}/repository/resources/security/client-truststore.jks
+  type: JKS
+  password: wso2carbon
+
+  # Add any new changes you want to add for the group/profile below.
+  # If you add a new file under templates and parameterized the file, the values for those parameters should be added
+  # below.
+  # Example:
+  # Changes applied to bps-datasources.xml file.
+# bps_datasources:
+#   driver_class_name: com.mysql.jdbc.Driver
+#   url: jdbc:mysql://wso2is-pattern1-mysql-service:3306/WSO2_IDENTITY_DB autoReconnect=true&amp;verifyServerCertificate=false&amp;useSSL=true
+#   username: wso2carbon
+#   password: wso2carbon

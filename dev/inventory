@@ -1,2 +1,5 @@
 [is]
-wso2is ansible_host=[ip_address]
+is_1 ansible_host=[ip_address]
+
+# Add a new is node
+# is_2 ansible_host=[ip_address]

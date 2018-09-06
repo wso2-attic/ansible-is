@@ -19,12 +19,12 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# Packages inside files folder
+files/*
+!files/.gitkeep
 
-#packages inside files folder
-files/
-
-#auto-generated .retry files
+# Auto-generated .retry files
 *.retry
