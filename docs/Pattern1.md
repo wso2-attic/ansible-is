@@ -31,6 +31,6 @@ NOTE: This hostname is used by the cluster. It must be defined in the /etc/hosts
 
 1. Add the parameterized file to the `templates/carbon-home` directory. This maintains the exact folder structure of the WSO2 Identity Server pack.
 
-2. Add the action you need to take on the above file to the `customs.yml` file as mentioned in [here](README.md#Step_2).
+2. Add the action you need to take on the above file to the `customs.yml` file as mentioned in [here](master#step-2).
 
 3. Based on the parameters, add the values to the yml files under `group_vars` or `host_vars`. An example is given in the file itself.
