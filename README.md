@@ -19,7 +19,12 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   ├── host_vars
 │   │   └── wso2is.yml
 │   └── inventory
-├── FAQ.md
+├── docs
+│   ├── images
+│   │   ├── Deployment-pattern-1-diagram.png
+│   │   └── Deployment-pattern-2-diagram.png
+│   ├── Pattern1.md
+│   └── Pattern2.md
 ├── files
 │   ├── mysql-connector-java-5.1.45-bin.jar
 │   └── wso2is-linux-installer-x64-5.6.0.deb
@@ -30,7 +35,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 ├── roles
 │   └── wso2is
 │       ├── tasks
-│       │   ├── customize.yml
+│       │   ├── custom.yml
 │       │   └── main.yml
 │       └── templates
 │           ├── carbon-home
@@ -62,10 +67,10 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 ## Packs to be Copied
 
-Copy the following files to `ansible-is/files` directory.
+Copy the following files to `files` directory.
 
-1. WSO2 Identity Server 5.6.0 package (deb or rpm)
-2. mysql-connector-java-5.1.45-bin.jar
+1. [WSO2 Identity Server 5.6.0 package](https://wso2.com/identity-and-access-management/install)
+2. [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/5.1.html)
 
 ## Running WSO2 Identity Server Ansible scripts
 
@@ -86,16 +91,16 @@ If you need to alter the configurations given, please change the parameterized v
 
 The templates that are used by the Ansible scripts are in j2 format in-order to enable parameterization.
 
-The `axis2.xml.j2` file is added under `roles/wso2is/templates/carbon-home/repositoy/conf/axis2/`, in order to enable customizations. You can add any other customizations to `customize.yml` under tasks of each role as well.
+The `axis2.xml.j2` file is added under `roles/wso2is/templates/carbon-home/repositoy/conf/axis2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
 
 #### Step 1
 Uncomment the following line in `main.yml` under the role you want to customize.
 ```
-- import_tasks: customize.yml
+- import_tasks: custom.yml
 ```
 
 #### Step 2
-Add the configurations to the `customize.yml`. A sample is given below.
+Add the configurations to the `custom.yml`. A sample is given below.
 
 ```
 - name: "Copy custom file"
@@ -105,4 +110,4 @@ Add the configurations to the `customize.yml`. A sample is given below.
   when: "(inventory_hostname in groups['is'])"
 ```
 
-Follow the steps mentioned in the [ansible-is wiki](https://github.com/wso2/ansible-is/wiki) to customize/create new Ansible scripts.
+Follow the steps mentioned under `docs` directory to customize/create new Ansible scripts and deploy the recommended patterns.

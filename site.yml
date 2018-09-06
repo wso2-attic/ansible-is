@@ -18,13 +18,15 @@
 # This playbook deploys the whole application stack in this site.
 
 - name: WSO2 Identity Server
-  hosts: all
+  hosts:
+    - is_1
+    # Uncomment the follow line to add another IS node.
+    # - is_2
   become: yes
 
   # Please note that the remote_user will change based on the nodes.
-  # Ex: If you use a Vagrant box to host the Identity server node, configuration
-  # is as follows.
+  # Ex: If you use a Vagrant box to host the Identity server node, configuration is as follows.
   # remote_user: vagrant
   remote_user: ubuntu
   roles:
-    - role: wso2is
+    - is

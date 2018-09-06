@@ -19,5 +19,5 @@
 # - name: "Copy custom file"
 #   template:
 #     src: path/to/example/file/example.xml.j2
-#     dest: destination/example.xml.j2
+#     dest: destination/example.xml
 #   when: "(inventory_hostname in groups['is'])"

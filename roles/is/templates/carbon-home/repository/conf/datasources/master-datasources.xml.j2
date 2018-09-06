@@ -13,10 +13,10 @@
           </jndiConfig>
           <definition type="RDBMS">
               <configuration>
-                  <url>{{ wso2_carbon_db.url }}</url>
-                  <username>{{ wso2_carbon_db.username }}</username>
-                  <password>{{ wso2_carbon_db.password }}</password>
-                  <driverClassName>{{ wso2_carbon_db.driver_class_name }}</driverClassName>
+                  <url>jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                  <username>wso2carbon</username>
+                  <password>wso2carbon</password>
+                  <driverClassName>org.h2.Driver</driverClassName>
                   <maxActive>50</maxActive>
                   <maxWait>60000</maxWait>
                   <testOnBorrow>true</testOnBorrow>
