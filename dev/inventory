@@ -1,3 +1,5 @@
 [is]
-172.28.128.4
-172.28.128.5
+is_1 ansible_host=[ip_address]
+
+# Add a new is node
+# is_2 ansible_host=[ip_address]

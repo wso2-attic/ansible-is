@@ -14,12 +14,10 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
----
-clustering:
-  enabled: true
-  localMemberHost: "172.28.128.5"
-  members:
-    -
-      hostName: "172.28.128.4"
-    -
-      hostName: "172.28.128.5"
+# Add configs for the custom files that are needed to be copied/replaced here.
+# An example is provided below.
+# - name: "Copy custom file"
+#   template:
+#     src: path/to/example/file/example.xml.j2
+#     dest: destination/example.xml
+#   when: "(inventory_hostname in groups['is'])"
