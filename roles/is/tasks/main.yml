@@ -14,24 +14,28 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 ---
--
-  become: yes
-  become_user: "{{ wso2_user }}"
-  become_method: enable
-  block:
+  - block:
+    - name: Create group
+      group: name=wso2 state=present
+      become: true
+      become_method: sudo
+
+    - name: Add wso2carbon user
+      user: name={{ wso2_user }} shell=/bin/bash group=wso2
+      become: true
+      become_method: sudo
+
     - name: Create WSO2 directory
       file:
         path: /opt/wso2
         state: directory
-        mode: "u=rw,g=wx,o=rwx"
-      when: "(inventory_hostname in groups['is'])"
+        mode: 0755
 
     - name: Copy the Debian package of WSO2 Identity Server
       copy:
         src: "{{ product_package_location }}/{{ product_archive_deb }}"
         dest: "{{ product_path }}/{{product_archive_deb }}"
         mode: u=rw,g=r,o=r
-      state: absent
       when: ansible_os_family == "Debian"
 
     - name: Copy the RPM package of WSO2 Identity Server
@@ -39,7 +43,6 @@
         src: "{{ product_package_location  }}/{{ product_archive_rpm  }}"
         dest: "{{ product_path  }}/{{ product_archive_rpm  }}"
         mode: u=rw,g=r,o=r
-      state: absent
       when: ansible_os_family == "RedHat"
 
     - name: Install a .deb package
@@ -52,25 +55,33 @@
         deb: "{{ product_path  }}/{{ product_archive_rpm  }}"
       when: ansible_os_family == "RedHat"
 
+    - name: Change the owner of WSO2 directory
+      file:
+        path: "{{ setup_path }}"
+        state: directory
+        recurse: true
+        owner: "{{ wso2_user }}"
+        group: "{{ wso2_group }}"
+        mode: 0755
+
+    become: true
+    become_user: root
+
+  - block:
     - name: "Copy JDBC Driver"
       copy:
        src: "files/{{ jdbc_driver }}"
        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/components/lib"
-      state: absent
-
-# Copy configuration file changes to the installed directory
 
     - name: "Copy master-datasource.xml"
       template:
         src: "carbon-home/repository/conf/datasources/master-datasources.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/conf/datasources/master-datasources.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy identity.xml"
       template:
         src: "carbon-home/repository/conf/identity/identity.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/conf/identity/identity.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy carbon.xml"
       template:
@@ -81,7 +92,6 @@
       template:
         src: "carbon-home/repository/conf/registry.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/conf/registry.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy axis2.xml"
       template:
@@ -92,7 +102,6 @@
       template:
         src: "carbon-home/repository/conf/tomcat/catalina-server.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/conf/tomcat/catalina-server.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy user-mgt.xml"
       template:
@@ -104,46 +113,46 @@
       template:
         src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy IsAnalytics-Publisher-wso2event-RoleDataa.xml"
       template:
         src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy IsAnalytics-Publisher-wso2event-SessionData.xml"
       template:
         src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy IsAnalytics-Publisher-wso2event-UserData.xml"
       template:
         src: "carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Copy wso2server.sh"
       template:
         src: "carbon-home/bin/wso2server.sh.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/wso2server.sh"
-      when: "(inventory_hostname in groups['is'])"
 
-# Enable customization by uncommenting the following and adding the changes to
-# the customize.yml
-    # - import_tasks: customize.yml
+    when: "(inventory_hostname in groups['is'])"
+    become: true
+    become_method: sudo
+    become_user: "{{ wso2_user }}"
 
+# Enable customization by uncommenting the following and adding the changes to the customize.yml
+      # - import_tasks: customize.yml
+
+  - block:
     - name: "Copy WSO2IS service file"
       template:
         src: "wso2is.service.j2"
         dest: "{{ systemd_path }}/wso2is.service"
-      when: "(inventory_hostname in groups['is'])"
 
     - name: "Reload systemctl daemon"
       command: systemctl daemon-reload
-      become: yes
 
     - name: "Start wso2-is as a service"
-      command: systemctl start wso2is
-      become: yes
+      command: systemctl start wso2is.service
+
+    become: true
+    become_user: root
