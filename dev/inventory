@@ -1,5 +1,8 @@
 [is]
-is_1 ansible_host=[ip_address]
+# Example
+# is_1 ansible_host=172.28.128.4 ansible_user=vagrant
 
-# Add a new is node
-# is_2 ansible_host=[ip_address]
+is_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+
+# Add a new Identity Server node
+# is_2 ansible_host=[ip_address] ansible_user=[ssh_user]
