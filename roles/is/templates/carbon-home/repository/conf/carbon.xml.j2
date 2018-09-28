@@ -36,7 +36,7 @@
     <!--
        Product Version
     -->
-    <Version>5.6.0</Version>
+    <Version>5.7.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -44,12 +44,12 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <HostName>{{ carbon.hostname }}</HostName>
+    <HostName>{{ hostname }}</HostName>
 
     <!--
     Host name to be used for the Carbon management console
     -->
-    <MgtHostName>{{ carbon.mgt_hostname }}</MgtHostName>
+    <MgtHostName>{{ hostname }}</MgtHostName>
 
     <!--
         The URL of the back end server. This is where the admin services are hosted and
@@ -124,7 +124,7 @@
          the define value + Offset.
          e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
          -->
-        <Offset>{{ carbon.port_offset }}</Offset>
+        <Offset>{{ ports_offset }}</Offset>
 
         <!-- The JMX Ports -->
         <JMX>
@@ -349,6 +349,33 @@
     </ServiceUserRoles>
 
     <!--
+       Configurations related to Carbon Crypto Service which is a crypto framework used inside Carbon products.
+    -->
+    <CryptoService>
+
+        <Enabled>true</Enabled>
+
+        <!-- The crypto provider which is used for internal data encryption and decryption -->
+        <InternalCryptoProviderClassName>org.wso2.carbon.crypto.provider.KeyStoreBasedInternalCryptoProvider</InternalCryptoProviderClassName>
+
+        <!--
+            The crypto provider which is used for the crypto needs which come when communicating with external parties.
+            e.g. Signing, Decrypting.
+        -->
+        <ExternalCryptoProviderClassName>org.wso2.carbon.core.encryption.KeyStoreBasedExternalCryptoProvider</ExternalCryptoProviderClassName>
+
+        <!--
+            The list of key resolvers which will be used based on the context when handling crypto with external parties.
+
+            e.g. Resolving the public key of an external entity.
+        -->
+        <KeyResolvers>
+            <KeyResolver className="org.wso2.carbon.crypto.defaultProvider.resolver.ContextIndependentKeyResolver" priority="-1"/>
+        </KeyResolvers>
+
+    </CryptoService>
+
+    <!--
       Enable following config to allow Emails as usernames.
     -->
     <!--EnableEmailUserName>true</EnableEmailUserName-->
@@ -363,16 +390,33 @@
         -->
         <KeyStore>
             <!-- Keystore file location-->
-            <Location>{{ carbon.keystore.location }}</Location>
+            <Location>{{ keystore_location }}</Location>
             <!-- Keystore type (JKS/PKCS12 etc.)-->
-            <Type>{{ carbon.keystore.type }}</Type>
+            <Type>{{ keystore_type }}</Type>
             <!-- Keystore password-->
-            <Password>{{ carbon.keystore.password }}</Password>
+            <Password>{{ keystore_password }}</Password>
             <!-- Private Key alias-->
-            <KeyAlias>{{ carbon.keystore.key_alias }}</KeyAlias>
+            <KeyAlias>{{ keystore_key_alias }}</KeyAlias>
             <!-- Private Key password-->
-            <KeyPassword>{{ carbon.keystore.key_password }}</KeyPassword>
+            <KeyPassword>{{ keystore_key_password }}</KeyPassword>
         </KeyStore>
+
+        <!--
+            The KeyStore which is used for encrypting/decrypting internal data.
+            This block is read by Carbon Crypto Service.
+        -->
+        <InternalKeyStore>
+            <!-- Keystore file location-->
+            <Location>{{ internal_keystore_location }}</Location>
+            <!-- Keystore type (JKS/PKCS12 etc.)-->
+            <Type>{{ internal_keystore_type }}</Type>
+            <!-- Keystore password-->
+            <Password>{{ internal_keystore_password }}</Password>
+            <!-- Private Key alias-->
+            <KeyAlias>{{ internal_keystore_key_alias }}</KeyAlias>
+            <!-- Private Key password-->
+            <KeyPassword>{{ internal_keystore_key_password }}</KeyPassword>
+        </InternalKeyStore>
 
         <!--
             System wide trust-store which is used to maintain the certificates of all
@@ -380,11 +424,11 @@
         -->
         <TrustStore>
             <!-- trust-store file location -->
-            <Location>{{ carbon.truststore.location }}</Location>
+            <Location>{{truststore_location }}</Location>
             <!-- trust-store type (JKS/PKCS12 etc.) -->
-            <Type>{{ carbon.truststore.type }}</Type>
+            <Type>{{ truststore_type }}</Type>
             <!-- trust-store password -->
-            <Password>{{ carbon.truststore.password }}</Password>
+            <Password>{{ truststore_password }}</Password>
         </TrustStore>
 
         <!--

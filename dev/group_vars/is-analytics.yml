@@ -18,15 +18,13 @@ wso2_group: wso2
 wso2_user: wso2carbon
 deb_setup_path: /usr/lib/wso2
 rpm_setup_path: /usr/lib64/wso2
-product_name: wso2is
+product_name: wso2is-analytics
 product_version: 5.7.0
 product_path: /opt/wso2
-product_archive_deb: wso2is-linux-installer-x64-5.7.0.deb
-product_archive_rpm: wso2is-linux-installer-x64-5.7.0.rpm
+product_archive_deb: wso2is-analytics-linux-installer-x64-5.7.0.deb
+product_archive_rpm: wso2is-analytics-linux-installer-x64-5.7.0.rpm
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.45-bin.jar
-
-is_analytics_hostname: localhost
 
 wso2_reg_db_driver_class_name: org.h2.Driver
 wso2_reg_db_url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000

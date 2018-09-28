@@ -13,29 +13,19 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #----------------------------------------------------------------------------
-
 ---
-# This playbook deploys the whole application stack in this site.
+  - block:
+    - name: Create group
+      group: name=wso2 state=present gid=802
 
-- name: Apply common configuration to all nodes
-  hosts: all
-  roles:
-    - common
+    - name: Add wso2carbon user
+      user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present uid=802
 
-- name: Apply Identity Server configuration to is nodes
-  hosts:
-    - is_1
-  roles:
-    - is
+    - name: Create WSO2 directory
+      file:
+        path: /opt/wso2
+        state: directory
+        mode: 0755
 
-- name: Apply Analytics dashboard configuration to is-analytics-dashboard nodes
-  hosts:
-    - is-analytics-dashboard_1
-  roles:
-    - is-analytics-dashboard
-
-- name: Apply Analytics worker configuration to is-analytics-worker nodes
-  hosts:
-    - is-analytics-worker_1
-  roles:
-    - is-analytics-worker
+    become: true
+    become_user: root
