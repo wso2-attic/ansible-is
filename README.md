@@ -1,24 +1,26 @@
 # WSO2 Identity Server Ansible scripts
 
-This repository contains the Ansible scripts for installing and configuring WSO2 Identity Server.
+This repository contains the Ansible scripts for installing and configuring WSO2 Identity Server and Identity Server Analytics.
 
 ## Supported Operating Systems
 
 - Ubuntu 16.04 or higher
+- CentOS 7
 
 ## Supported Ansible Versions
 
-- Ansible 2.0.0.2
+- Ansible 2.6.2
 
 ## Directory Structure
 ```
 .
 ├── dev
 │   ├── group_vars
+│   │   ├── is-analytics.yml
 │   │   └── is.yml
 │   ├── host_vars
 │   │   ├── is_1.yml
-│   │   └── is_2.yml
+│   │   └── is-analytics_1.yml
 │   └── inventory
 ├── docs
 │   ├── images
@@ -28,41 +30,78 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   └── Pattern2.md
 ├── files
 │   ├── mysql-connector-java-5.1.45-bin.jar
-│   └── wso2is-linux-installer-x64-5.6.0.deb
+│   ├── wso2is-analytics-linux-installer-x64-5.7.0.deb
+│   ├── wso2is-analytics-linux-installer-x64-5.7.0.rpm
+│   ├── wso2is-linux-installer-x64-5.7.0.deb
+│   └── wso2is-linux-installer-x64-5.7.0.rpm
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
 ├── README.md
 ├── roles
-│   └── is
+│   ├── common
+│   │   └── tasks
+│   │       ├── custom.yml
+│   │       └── main.yml
+│   ├── is
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── wso2server.sh.j2
+│   │       │   └── repository
+│   │       │       ├── conf
+│   │       │       │   ├── axis2
+│   │       │       │   │   └── axis2.xml.j2
+│   │       │       │   ├── carbon.xml.j2
+│   │       │       │   ├── datasources
+│   │       │       │   │   ├── bps-datasources.xml.j2
+│   │       │       │   │   ├── master-datasources.xml.j2
+│   │       │       │   │   └── metrics-datasources.xml.j2
+│   │       │       │   ├── identity
+│   │       │       │   │   └── identity.xml.j2
+│   │       │       │   ├── registry.xml.j2
+│   │       │       │   ├── tomcat
+│   │       │       │   │   └── catalina-server.xml.j2
+│   │       │       │   └── user-mgt.xml.j2
+│   │       │       └── deployment
+│   │       │           └── server
+│   │       │               └── eventpublishers
+│   │       │                   ├── IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2
+│   │       │                   ├── IsAnalytics-Publisher-wso2event-RoleData.xml.j2
+│   │       │                   ├── IsAnalytics-Publisher-wso2event-SessionData.xml.j2
+│   │       │                   └── IsAnalytics-Publisher-wso2event-UserData.xml.j2
+│   │       └── wso2is.service.j2
+│   ├── is-analytics-dashboard
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── conf
+│   │       │   │   └── dashboard
+│   │       │   │       └── deployment.yaml.j2
+│   │       │   └── wso2
+│   │       │       └── dashboard
+│   │       │           └── bin
+│   │       │               └── carbon.sh.j2
+│   │       └── wso2is-analytics-dashboard.service.j2
+│   └── is-analytics-worker
 │       ├── tasks
 │       │   ├── custom.yml
 │       │   └── main.yml
 │       └── templates
 │           ├── carbon-home
-│           │   ├── bin
-│           │   │   └── wso2server.sh.j2
-│           │   └── repository
-│           │       ├── conf
-│           │       │   ├── axis2
-│           │       │   │   └── axis2.xml.j2
-│           │       │   ├── carbon.xml.j2
-│           │       │   ├── datasources
-│           │       │   │   └── master-datasources.xml.j2
-│           │       │   ├── identity
-│           │       │   │   └── identity.xml.j2
-│           │       │   ├── registry.xml.j2
-│           │       │   ├── tomcat
-│           │       │   │   └── catalina-server.xml.j2
-│           │       │   └── user-mgt.xml.j2
-│           │       └── deployment
-│           │           └── server
-│           │               └── eventpublishers
-│           │                   ├── IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2
-│           │                   ├── IsAnalytics-Publisher-wso2event-RoleData.xml.j2
-│           │                   ├── IsAnalytics-Publisher-wso2event-SessionData.xml.j2
-│           │                   └── IsAnalytics-Publisher-wso2event-UserData.xml.j2
-│           └── wso2is.service.j2
+│           │   ├── conf
+│           │   │   └── worker
+│           │   │       └── deployment.yaml.j2
+│           │   └── wso2
+│           │       └── worker
+│           │           └── bin
+│           │               └── carbon.sh.j2
+│           └── wso2is-analytics-worker.service.j2
 └── site.yml
 ```
 
@@ -70,8 +109,9 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 Copy the following files to `files` directory.
 
-1. [WSO2 Identity Server 5.6.0 package](https://wso2.com/identity-and-access-management/install)
-2. [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/5.1.html)
+1. [WSO2 Identity Server 5.7.0 package](https://wso2.com/identity-and-access-management/install)
+2. [WSO2 Identity Server Analytics 5.7.0 package](https://wso2.com/identity-and-access-management/install/analytics/)
+3. [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/5.1.html)
 
 ## Running WSO2 Identity Server Ansible scripts
 

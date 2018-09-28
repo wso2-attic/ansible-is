@@ -27,38 +27,15 @@
     <enableCache>true</enableCache>
     <registryRoot>/</registryRoot>
 
-    <dbConfig name="localregistry">
+    <dbConfig name="wso2registry">
         <dataSource>jdbc/WSO2CarbonDB</dataSource>
     </dbConfig>
 
-    <dbConfig name="sharedregistry">
-        <dataSource>jdbc/WSO2RegDS</dataSource>
-    </dbConfig>
-
-    <remoteInstance url="https://localhost:9443/registry">
-        <id>sharedregistry</id>
-        <dbConfig>sharedregistry</dbConfig>
-        <readOnly>false</readOnly>
-        <registryRoot>/</registryRoot>
-        <enableCache>true</enableCache>
-        <cacheId>{{ wso2_reg_db.url }}</cacheId>
-    </remoteInstance>
-
-    <mount path="/_system/config" overwrite="true">
-        <instanceId>sharedregistry</instanceId>
-        <targetPath>/_system/config</targetPath>
-    </mount>
-
-    <mount path="/_system/governance" overwrite="true">
-        <instanceId>sharedregistry</instanceId>
-        <targetPath>/_system/governance</targetPath>
-    </mount>
-
-    <handler class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyHandler">
-      <filter class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyMediaTypeMatcher">
-        <property name="mediaType">application/xacml-policy+xml</property>
-      </filter>
-    </handler>
+   <handler class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyHandler">
+ <filter class="org.wso2.carbon.identity.entitlement.policy.finder.registry.RegistryPolicyMediaTypeMatcher">
+ <property name="mediaType">application/xacml-policy+xml</property>
+ </filter>
+ </handler>
 
  <!--<handler class="org.wso2.carbon.registry.extensions.handlers.SynapseRepositoryHandler">
         <filter class="org.wso2.carbon.registry.core.jdbc.handlers.filters.MediaTypeMatcher">
@@ -144,7 +121,7 @@
         </exclusions>
     </indexingConfiguration>
 
-
+    
     <versionResourcesOnChange>false</versionResourcesOnChange>
 
     <!-- NOTE: You can edit the options under "StaticConfiguration" only before the

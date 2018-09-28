@@ -1,8 +1,13 @@
 [is]
+is_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 # Example
 # is_1 ansible_host=172.28.128.4 ansible_user=vagrant
 
-is_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+[is-analytics]
+is-analytics-dashboard_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# is-analytics-dashboard_1 ansible_host=172.28.128.4 ansible_user=vagrant
 
-# Add a new Identity Server node
-# is_2 ansible_host=[ip_address] ansible_user=[ssh_user]
+is-analytics-worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# is-analytics-worker_1 ansible_host=172.28.128.4 ansible_user=vagrant
