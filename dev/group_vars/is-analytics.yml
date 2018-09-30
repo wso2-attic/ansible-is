@@ -26,32 +26,44 @@ product_archive_rpm: wso2is-analytics-linux-installer-x64-5.7.0.rpm
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.45-bin.jar
 
-wso2_reg_db_driver_class_name: org.h2.Driver
-wso2_reg_db_url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-wso2_reg_db_username: wso2carbon
-wso2_reg_db_password: wso2carbon
+analytics_worker_node_ip: localhost
+analytics_worker_node_http_port: 9443
 
-wso2_user_db_driver_class_name: org.h2.Driver
-wso2_user_db_url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-wso2_user_db_username: wso2carbon
-wso2_user_db_password: wso2carbon
+# Data Sources Configurations
+wso2_dashboard_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_dashboard_db_username: wso2carbon
+wso2_dashboard_db_password: wso2carbon
+wso2_dashboard_db_driver_class_name: org.h2.Driver
 
-wso2_consent_db_driver_class_name: org.h2.Driver
-wso2_identity_db_url: jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-wso2_identity_db_username: wso2carbon
-wso2_identity_db_password: wso2carbon
+business_rules_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/BUSINESS_RULES_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+business_rules_db_username: wso2carbon
+business_rules_db_password: wso2carbon
+business_rules_db_driver_class_name: org.h2.Driver
 
-# KeyStore which will be used for encrypting/decrypting passwords and other sensitive information.
-keystore_location: ${carbon.home}/repository/resources/security/wso2carbon.jks
-keystore_type: JKS
-keystore_password: wso2carbon
-keystore_key_alias: wso2carbon
-keystore_key_password: wso2carbon
+wso2_status_dashboard_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/wso2_status_dashboard;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_status_dashboard_db_username: wso2carbon
+wso2_status_dashboard_db_password: wso2carbon
+wso2_status_dashboard_db_driver_class_name: org.h2.Driver
 
-# System wide trust-store which is used to maintain the certificates of all the trusted parties.
-truststore_location: ${carbon.home}/repository/resources/security/client-truststore.jks
-truststore_type: JKS
-truststore_password: wso2carbon
+wso2_metrics_db_url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE
+wso2_metrics_db_username: wso2carbon
+wso2_metrics_db_password: wso2carbon
+wso2_metrics_db_driver_class_name: org.h2.Driver
+
+wso2_permissions_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_permissions_db_username: wso2carbon
+wso2_permissions_db_password: wso2carbon
+wso2_permissions_db_driver_class_name: org.h2.Driver
+
+message_tracing_db_url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE
+message_tracing_db_username: wso2carbon
+message_tracing_db_password: wso2carbon
+message_tracing_db_driver_class_name: org.h2.Driver
+
+is_analytics_db_url: jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE
+is_analytics_db_username: wso2carbon
+is_analytics_db_password: wso2carbon
+is_analytics_db_driver_class_name: org.h2.Driver
 
 # Add any new changes you want to add for the group/profile below.
 # If you add a new file under templates and parameterized the file, the values for those parameters should be added

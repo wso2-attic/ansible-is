@@ -17,7 +17,7 @@
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
-  id: wso2-analytics-is
+  id: {{ server_id }}
     # server name
   name: WSO2 Analytics Identity Server
     # dashboard type
@@ -25,7 +25,7 @@ wso2.carbon:
     # ports used by this server
   ports:
       # port offset
-    offset: 0
+    offset: {{ ports_offset }}
 
 wso2.transport.http:
   transportProperties:
@@ -42,16 +42,16 @@ wso2.transport.http:
   listenerConfigurations:
     -
       id: "default"
-      host: "0.0.0.0"
-      port: 9090
+      host: "{{ hostname }}"
+      port: {{ listener_configurations_default_port }}
     -
       id: "msf4j-https"
-      host: "0.0.0.0"
-      port: 9091
+      host: "{{ hostname }}"
+      port: {{ listener_configurations_msf4j_port }}
       scheme: https
-      keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
-      keyStorePassword: wso2carbon
-      certPass: wso2carbon
+      keyStoreFile: "{{ listener_configurations_keystore_file }}"
+      keyStorePassword: {{ listener_configurations_keystore_password }}
+      certPass: {{ listener_configurations_keystore_cert_password }}
 
   senderConfigurations:
     -
@@ -61,7 +61,7 @@ wso2.transport.http:
 databridge.config:
     # No of worker threads to consume events
     # THIS IS A MANDATORY FIELD
-  workerThreads: 10
+  workerThreads: {{ worker_threads }}
     # Maximum amount of messages that can be queued internally in MB
     # THIS IS A MANDATORY FIELD
   maxEventBufferCapacity: 10000000
@@ -70,10 +70,10 @@ databridge.config:
   eventBufferSize: 2000
     # Keystore file path
     # THIS IS A MANDATORY FIELD
-  keyStoreLocation : ${sys:carbon.home}/resources/security/wso2carbon.jks
+  keyStoreLocation : {{ databridge_config_keystore_location }}
     # Keystore password
     # THIS IS A MANDATORY FIELD
-  keyStorePassword : wso2carbon
+  keyStorePassword : {{ databridge_config_keystore_password }}
     # Session Timeout value in mins
     # THIS IS A MANDATORY FIELD
   clientTimeoutMin: 30
@@ -88,8 +88,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: '7612'
-        sslPort: '7712'
+        tcpPort: '{{ thrift_data_receiver_tcp_port }}'
+        sslPort: '{{ thrift_data_receiver_ssl_port }}'
 
   -
       # Data receiver configuration
@@ -99,11 +99,11 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: '9611'
-        sslPort: '9711'
+        tcpPort: '{{ binary_data_receiver_tcp_port }}'
+        sslPort: '{{ binary_data_receiver_ssl_port }}'
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
-        hostName: 0.0.0.0
+        hostName: {{ hostname }}
 
   # Configuration of the Data Agents - to publish events through databridge
 data.agent.config:
@@ -122,9 +122,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: '${sys:carbon.home}/resources/security/client-truststore.jks'
+      trustStorePath: '{{ truststore_path }}'
         # Trust store password
-      trustStorePassword: 'wso2carbon'
+      trustStorePassword: '{{ truststore_password }}'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -171,9 +171,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: '${sys:carbon.home}/resources/security/client-truststore.jks'
+      trustStorePath: '{{ truststore_path }}'
         # Trust store password
-      trustStorePassword: 'wso2carbon'
+      trustStorePassword: '{{ truststore_password }}'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -274,7 +274,7 @@ wso2.artifact.deployment:
 
   # Periodic Persistence Configuration
 state.persistence:
-  enabled: false
+  enabled: {{ state_persistence_enabled }}
   intervalInMin: 1
   revisionsToKeep: 2
   persistenceStore: org.wso2.carbon.stream.processor.core.persistence.FileSystemPersistenceStore
@@ -286,13 +286,13 @@ wso2.securevault:
   secretRepository:
     type: org.wso2.carbon.secvault.repository.DefaultSecretRepository
     parameters:
-      privateKeyAlias: wso2carbon
-      keystoreLocation: ${sys:carbon.home}/resources/security/securevault.jks
-      secretPropertiesFile: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
+      privateKeyAlias: {{ securevault_private_key_alias }}
+      keystoreLocation: {{ securevault_keystore_location }}
+      secretPropertiesFile: {{ secret_properties_file }}
   masterKeyReader:
     type: org.wso2.carbon.secvault.reader.DefaultMasterKeyReader
     parameters:
-      masterKeyReaderFile: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+      masterKeyReaderFile: {{ master_key_reader_file }}
 
   # Datasource Configurations
 wso2.datasources:
@@ -321,10 +321,10 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: '{{ wso2_metrics_db_url }}'
+          username: {{ wso2_metrics_db_username }}
+          password: {{ wso2_metrics_db_password }}
+          driverClassName: {{ wso2_metrics_db_driver_class_name }}
           maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
@@ -339,10 +339,10 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: '{{ wso2_permissions_db_url }}'
+          username: {{wso2_permissions_db_username }}
+          password: {{ wso2_permissions_db_password }}
+          driverClassName: {{ wso2_permissions_db_driver_class_name }}
           maxPoolSize: 10
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
@@ -391,10 +391,10 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: '{{ message_tracing_db_url }}'
+          username: {{ message_tracing_db_username }}
+          password: {{ message_tracing_db_password }}
+          driverClassName: {{ message_tracing_db_driver_class_name }}
           maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
@@ -408,10 +408,10 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
+          jdbcUrl: '{{ is_analytics_db_url }}'
+          username: {{ is_analytics_db_username }}
+          password: {{ is_analytics_db_password }}
+          driverClassName: {{ is_analytics_db_driver_class_name }}
           maxPoolSize: 50
           idleTimeout: 60000
           validationTimeout: 30000
@@ -475,7 +475,7 @@ siddhi:
 
   # Cluster Configuration
 cluster.config:
-  enabled: false
+  enabled: {{ cluster_config_enabled }}
   groupId:  is.analytics
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:

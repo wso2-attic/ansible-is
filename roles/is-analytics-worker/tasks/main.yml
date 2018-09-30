@@ -49,6 +49,7 @@
     - name: Install a .rpm package
       yum:
         name: "{{ product_path  }}/{{ product_archive_rpm  }}"
+        state: present
       when: ansible_os_family == "RedHat"
 
     - name: "Copy JDBC Driver"
