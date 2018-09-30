@@ -47,8 +47,9 @@
       when: ansible_os_family == "Debian"
 
     - name: Install a .rpm package
-      apt:
-        deb: "{{ product_path  }}/{{ product_archive_rpm  }}"
+      yum:
+        name: "{{ product_path  }}/{{ product_archive_rpm  }}"
+        state: present
       when: ansible_os_family == "RedHat"
 
     - name: "Copy JDBC Driver"
