@@ -18,44 +18,33 @@
 # NOTE: The parameterized values has the default values from the original pack. Please change them according to your
 # requirements. If you need to add additional configurations, please use the custom.yml under each role.
 
-# Changes applied to carbon.xml file.
-carbon:
-  # Host name or IP address of the machine hosting this server. This is will become part of the End Point Reference of
-  # the services deployed on this server instance.
-  hostname: localhost
+hostname: localhost
+mgt_hostname: localhost
+ports_offset: 0
 
-  # Host name to be used for the Carbon management console.
-  mgt_hostname: localhost
+# KeyStore which will be used for encrypting/decrypting passwords and other sensitive information.
+keystore_location: ${carbon.home}/repository/resources/security/wso2carbon.jks
+keystore_type: JKS
+keystore_password: wso2carbon
+keystore_key_alias: wso2carbon
+keystore_key_password: wso2carbon
 
-  # This entry will set the value of the ports defined below to the define value + Offset.
-  port_offset: 0
+# The KeyStore which is used for encrypting/decrypting internal data. This block is read by Carbon Crypto Service.
+internal_keystore_location: ${carbon.home}/repository/resources/security/wso2carbon.jks
+internal_keystore_type: JKS
+internal_keystore_password: wso2carbon
+internal_keystore_key_alias: wso2carbon
+internal_keystore_key_password: wso2carbon
 
-# Changes applied to catalina_server.xml file.
-catalina_server:
-  secure_vault:
-    # Enable securevault configurations by giving the the appripriate namespace.
-    # enable:  xmlns:svns="http://org.wso2.securevault/configuration"
-    port: "8005"
-    shutdown: "SHUTDOWN"
+# System wide trust-store which is used to maintain the certificates of all the trusted parties.
+truststore_location: ${carbon.home}/repository/resources/security/client-truststore.jks
+truststore_type: JKS
+truststore_password: wso2carbon
 
-  connector:
-    # Add HTTPS proxy port by uncommenting the following line.
-    # proxy_port_https: proxyPort="443"
-
-    # Add HTTP proxy port by uncommenting the following line.
-    # proxy_port_http: proxyPort="80"
-    max_threads: "250"
-    accept_count: "200"
-
-  # Add any new changes you want to add below.
-  # If you add a new file under templates and parameterized the file, the values for those parameters should be added
-  # below.
-  # Example:
-  # Changes applied to axi2.xml file.
-# axis2:
-#   wka_member1:
-#     wka_hostname: 127.0.0.1
-#     wka_port: 4000
-#   wka_member2:
-#     wka_hostname: 127.0.0.2
-#     wka_port: 4010
+# Configure proxy ports. Note that this is a optional attribute.
+# catalina_server_connector_http_proxy_port: 80
+catalina_server_connector_http_max_threads: 250
+catalina_server_connector_http_accept_count: 200
+# catalina_server_connector_https_proxy_port: 443
+catalina_server_connector_https_max_threads: 250
+catalina_server_connector_https_accept_count: 200

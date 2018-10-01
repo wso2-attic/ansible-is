@@ -14,28 +14,10 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
----
-# This playbook deploys the whole application stack in this site.
-
-- name: Apply common configuration to all nodes
-  hosts: all
-  roles:
-    - common
-
-- name: Apply Identity Server configuration to is nodes
-  hosts:
-    - is_1
-  roles:
-    - is
-
-- name: Apply Analytics dashboard configuration to is-analytics-dashboard nodes
-  hosts:
-    - is-analytics-dashboard_1
-  roles:
-    - is-analytics-dashboard
-
-- name: Apply Analytics worker configuration to is-analytics-worker nodes
-  hosts:
-    - is-analytics-worker_1
-  roles:
-    - is-analytics-worker
+# Add configs for the custom files that are needed to be copied/replaced here.
+# An example is provided below.
+# - name: "Copy custom file"
+#   template:
+#     src: path/to/example/file/example.xml.j2
+#     dest: destination/example.xml
+#   when: "(inventory_hostname in groups['is'])"

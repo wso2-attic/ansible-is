@@ -16,8 +16,7 @@
   limitations under the License.
 -->
 
-<Server {{ catalina_server.secure_vault.enable | default() }} port={{ catalina_server.secure_vault.port }}
-  shutdown={{ catalina_server.secure_vault.shutdown }}>
+<Server port="8005" shutdown="SHUTDOWN">
 
     <Service className="org.wso2.carbon.tomcat.ext.service.ExtendedStandardService" name="Catalina">
 
@@ -28,17 +27,17 @@
         -->
         <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
                    port="9763"
-                   {{ catalina_server.connector.proxy_port_http | default() }}
+                   {{ catalina_server_connector_http_proxy_port | default() }}
                    redirectPort="9443"
                    bindOnInit="false"
                    maxHttpHeaderSize="8192"
                    acceptorThreadCount="2"
-                   maxThreads={{ catalina_server.connector.max_threads }}
+                   maxThreads="{{ catalina_server_connector_http_max_threads }}"
                    minSpareThreads="50"
                    disableUploadTimeout="false"
                    connectionUploadTimeout="120000"
                    maxKeepAliveRequests="200"
-                   acceptCount={{ catalina_server.connector.accept_count }}
+                   acceptCount="{{ catalina_server_connector_http_accept_count }}"
                    server="WSO2 Carbon Server"
                    compression="on"
                    compressionMinSize="2048"
@@ -54,19 +53,19 @@
         -->
         <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
                    port="9443"
-                   {{ catalina_server.connector.proxy_port_https | default() }}
+                   {{ catalina_server_connector_https_proxy_port | default() }}
                    bindOnInit="false"
                    sslProtocol="TLS"
                    sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
                    maxHttpHeaderSize="8192"
                    acceptorThreadCount="2"
-                   maxThreads="250"
+                   maxThreads="{{ catalina_server_connector_https_max_threads }}"
                    minSpareThreads="50"
                    disableUploadTimeout="false"
                    enableLookups="false"
                    connectionUploadTimeout="120000"
                    maxKeepAliveRequests="200"
-                   acceptCount="200"
+                   acceptCount="{{ catalina_server_connector_https_accept_count }}"
                    server="WSO2 Carbon Server"
                    clientAuth="want"
                    compression="on"
@@ -76,8 +75,8 @@
                    compressionMinSize="2048"
                    noCompressionUserAgents="gozilla, traviata"
                    compressableMimeType="text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg"
-                   keystoreFile="{{carbon.keystore.location}}"
-                   keystorePass="{{carbon.keystore.password}}"
+                   keystoreFile="${carbon.home}/repository/resources/security/wso2carbon.jks"
+                   keystorePass="wso2carbon"
                    URIEncoding="UTF-8"/>
 
 
