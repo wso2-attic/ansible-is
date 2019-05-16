@@ -1,0 +1,180 @@
+# ----------------------------------------------------------------------
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+# ----------------------------------------------------------------------
+
+# command line arguments
+params:
+    wso2is: wso2is-5.7.0
+    wso2is-analytics: wso2is-analytics-5.7.0
+    existing_version_wso2is: 5.7.0
+    new_version_wso2is: 5.8.0
+    existing_version_wso2is-analytics: 5.7.0
+    new_version_wso2is-analytics: 5.8.0
+    existing_version: 5.7.0
+    new_version: 5.8.0
+
+# files based configurations
+files:
+  - file_path: roles/is/templates/carbon-home/bin/wso2server.sh.j2
+    relative_path: "{$arg.wso2is}/bin/wso2server.sh"
+    file_type: sh
+    configurations:
+      - operation: add
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }}; \\\n"
+  - file_path: roles/is/templates/carbon-home/repository/conf/tomcat/catalina-server.xml.j2
+    relative_path: "{$arg.wso2is}/repository/conf/tomcat/catalina-server.xml"
+    file_type: xml
+    configurations:
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9763\"]"
+        value: "maxThreads={{ catalina_server_connector_http_max_threads }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9763\"]"
+        value: "acceptCount={{ catalina_server_connector_http_accept_count }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9443\"]"
+        value: "maxThreads={{ catalina_server_connector_https_max_threads }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9443\"]"
+        value: "acceptCount={{ catalina_server_connector_https_accept_count }}"
+  - file_path: "roles/is/templates/carbon-home/repository/conf/carbon.xml.j2"
+    relative_path: "{$arg.wso2is}/repository/conf/carbon.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "Server/HostName"
+        current_value: "localhost"
+        new_value: "{{ hostname }}"
+      - operation: replace
+        xpath: "Server/MgtHostName"
+        current_value: "localhost"
+        new_value: "{{ hostname }}"
+      - operation: replace
+        xpath: "Server/Ports/Offset"
+        current_value: 0
+        new_value: "{{ ports_offset }}"  
+      - operation: replace
+        xpath: "Server/Security/KeyStore/Location"
+        current_value: "${carbon.home}/repository/resources/security/wso2carbon.jks"
+        new_value: "{{ keystore_location }}" 
+      - operation: replace
+        xpath: "Server/Security/KeyStore/Type"
+        current_value: "JKS"
+        new_value: "{{ keystore_type }}"                 
+      - operation: replace
+        xpath: "Server/Security/KeyStore/Password"
+        current_value: "wso2carbon"
+        new_value: "{{ keystore_password }}"         
+      - operation: replace
+        xpath: "Server/Security/KeyStore/KeyAlias"
+        current_value: "wso2carbon"
+        new_value: "{{ keystore_key_alias }}"   
+      - operation: replace
+        xpath: "Server/Security/KeyStore/KeyPassword"
+        current_value: "wso2carbon"
+        new_value: "{{ keystore_key_password }}"
+      - operation: replace
+        xpath: "Server/Security/InternalKeyStore/Location"
+        current_value: "${carbon.home}/repository/resources/security/wso2carbon.jks"
+        new_value: "{{ internal_keystore_location }}" 
+      - operation: replace
+        xpath: "Server/Security/InternalKeyStore/Type"
+        current_value: "JKS"
+        new_value: "{{ internal_keystore_type }}"                 
+      - operation: replace
+        xpath: "Server/Security/InternalKeyStore/Password"
+        current_value: "wso2carbon"
+        new_value: "{{ internal_keystore_password }}"         
+      - operation: replace
+        xpath: "Server/Security/InternalKeyStore/KeyAlias"
+        current_value: "wso2carbon"
+        new_value: "{{ internal_keystore_key_alias }}"   
+      - operation: replace
+        xpath: "Server/Security/InternalKeyStore/KeyPassword"
+        current_value: "wso2carbon"
+        new_value: "{{ internal_keystore_key_password }}"                
+      - operation: replace
+        xpath: "Server/Security/TrustStore/Location"
+        current_value: "${carbon.home}/repository/resources/security/client-truststore.jks"
+        new_value: "{{truststore_location }}" 
+      - operation: replace
+        xpath: "Server/Security/TrustStore/Type"
+        current_value: "JKS"
+        new_value: "{{ truststore_type }}" 
+      - operation: replace
+        xpath: "Server/Security/TrustStore/Password"
+        current_value: "wso2carbon"
+        new_value: "{{ truststore_password }}" 
+  - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2"
+    relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
+        current_value: "tcp://localhost:7612"
+        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+  - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.j2"
+    relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
+        current_value: "tcp://localhost:7612"
+        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+  - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.j2"
+    relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
+        current_value: "tcp://localhost:7612"
+        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+  - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.j2"
+    relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
+        current_value: "tcp://localhost:7612"
+        new_value: "tcp://{{ is_analytics_hostname }}:7612"
+  - file_path: "roles/is-analytics-dashboard/templates/carbon-home/conf/dashboard/deployment.yaml.j2"
+    relative_path: "{$arg.wso2is-analytics}/conf/dashboard/deployment.yaml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "wso2.carbon/id"
+        current_value: "wso2-analytics-is"
+        new_value: "{{ server_id }}"
+      - operation: replace
+        xpath: "wso2.carbon/ports/offset"
+        current_value: "2"
+        new_value: "{{ ports_offset }}"
+      - operation: replace
+        xpath: "databridge.config/workerThreads"
+        current_value: "10"
+        new_value: "{{ worker_threads }}"     
+      - operation: replace
+        xpath: "databridge.config/keyStoreLocation"
+        current_value: "${sys:carbon.home}/resources/security/wso2carbon.jks"
+        new_value: "{{ databridge_config_keystore_location }}"    
+      - operation: replace
+        xpath: "databridge.config/keyStorePassword"
+        current_value: "wso2carbon"
+        new_value: "{{ databridge_config_keystore_password }}"                
+      - operation: replace
+        xpath: "databridge.config/keyStorePassword"
+        current_value: "wso2carbon"
+        new_value: "{{ databridge_config_keystore_password }}"  
