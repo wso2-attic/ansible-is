@@ -26,6 +26,7 @@ params:
     new_version: 5.8.0
 
 # files based configurations
+# wso2is
 files:
   - file_path: roles/is/templates/carbon-home/bin/wso2server.sh.j2
     relative_path: "{$arg.wso2is}/bin/wso2server.sh"
@@ -55,126 +56,217 @@ files:
     file_type: xml
     configurations:
       - operation: replace
-        xpath: "Server/HostName"
-        current_value: "localhost"
-        new_value: "{{ hostname }}"
+        xpath: "HostName"
+        value: "{{ hostname }}"
       - operation: replace
-        xpath: "Server/MgtHostName"
-        current_value: "localhost"
-        new_value: "{{ hostname }}"
+        xpath: "MgtHostName"
+        value: "{{ hostname }}"
       - operation: replace
-        xpath: "Server/Ports/Offset"
-        current_value: 0
-        new_value: "{{ ports_offset }}"  
+        xpath: "Ports/Offset"
+        value: "{{ ports_offset }}"  
       - operation: replace
-        xpath: "Server/Security/KeyStore/Location"
-        current_value: "${carbon.home}/repository/resources/security/wso2carbon.jks"
-        new_value: "{{ keystore_location }}" 
+        xpath: "Security/KeyStore/Location"
+        value: "{{ keystore_location }}" 
       - operation: replace
-        xpath: "Server/Security/KeyStore/Type"
-        current_value: "JKS"
-        new_value: "{{ keystore_type }}"                 
+        xpath: "Security/KeyStore/Type"
+        value: "{{ keystore_type }}"                 
       - operation: replace
-        xpath: "Server/Security/KeyStore/Password"
-        current_value: "wso2carbon"
-        new_value: "{{ keystore_password }}"         
+        xpath: "Security/KeyStore/Password"
+        value: "{{ keystore_password }}"         
       - operation: replace
-        xpath: "Server/Security/KeyStore/KeyAlias"
-        current_value: "wso2carbon"
-        new_value: "{{ keystore_key_alias }}"   
+        xpath: "Security/KeyStore/KeyAlias"
+        value: "{{ keystore_key_alias }}"   
       - operation: replace
-        xpath: "Server/Security/KeyStore/KeyPassword"
-        current_value: "wso2carbon"
-        new_value: "{{ keystore_key_password }}"
+        xpath: "Security/KeyStore/KeyPassword"
+        value: "{{ keystore_key_password }}"
       - operation: replace
-        xpath: "Server/Security/InternalKeyStore/Location"
-        current_value: "${carbon.home}/repository/resources/security/wso2carbon.jks"
-        new_value: "{{ internal_keystore_location }}" 
+        xpath: "Security/InternalKeyStore/Location"
+        value: "{{ internal_keystore_location }}" 
       - operation: replace
-        xpath: "Server/Security/InternalKeyStore/Type"
-        current_value: "JKS"
-        new_value: "{{ internal_keystore_type }}"                 
+        xpath: "Security/InternalKeyStore/Type"
+        value: "{{ internal_keystore_type }}"                 
       - operation: replace
-        xpath: "Server/Security/InternalKeyStore/Password"
-        current_value: "wso2carbon"
-        new_value: "{{ internal_keystore_password }}"         
+        xpath: "Security/InternalKeyStore/Password"
+        value: "{{ internal_keystore_password }}"         
       - operation: replace
-        xpath: "Server/Security/InternalKeyStore/KeyAlias"
-        current_value: "wso2carbon"
-        new_value: "{{ internal_keystore_key_alias }}"   
+        xpath: "Security/InternalKeyStore/KeyAlias"
+        value: "{{ internal_keystore_key_alias }}"   
       - operation: replace
-        xpath: "Server/Security/InternalKeyStore/KeyPassword"
-        current_value: "wso2carbon"
-        new_value: "{{ internal_keystore_key_password }}"                
+        xpath: "Security/InternalKeyStore/KeyPassword"
+        value: "{{ internal_keystore_key_password }}"                
       - operation: replace
-        xpath: "Server/Security/TrustStore/Location"
-        current_value: "${carbon.home}/repository/resources/security/client-truststore.jks"
-        new_value: "{{truststore_location }}" 
+        xpath: "Security/TrustStore/Location"
+        value: "{{truststore_location }}" 
       - operation: replace
-        xpath: "Server/Security/TrustStore/Type"
-        current_value: "JKS"
-        new_value: "{{ truststore_type }}" 
+        xpath: "Security/TrustStore/Type"
+        value: "{{ truststore_type }}" 
       - operation: replace
-        xpath: "Server/Security/TrustStore/Password"
-        current_value: "wso2carbon"
-        new_value: "{{ truststore_password }}" 
+        xpath: "Security/TrustStore/Password"
+        value: "{{ truststore_password }}" 
   - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2"
     relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml"
     file_type: xml
     configurations:
       - operation: replace
-        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
-        current_value: "tcp://localhost:7612"
-        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ is_analytics_hostname }}:7612" 
   - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.j2"
     relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml"
     file_type: xml
     configurations:
       - operation: replace
-        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
-        current_value: "tcp://localhost:7612"
-        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ is_analytics_hostname }}:7612" 
   - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.j2"
     relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml"
     file_type: xml
     configurations:
       - operation: replace
-        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
-        current_value: "tcp://localhost:7612"
-        new_value: "tcp://{{ is_analytics_hostname }}:7612" 
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ is_analytics_hostname }}:7612" 
   - file_path: "roles/is/templates/carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.j2"
     relative_path: "{$arg.wso2is}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml"
     file_type: xml
     configurations:
       - operation: replace
-        xpath: "eventPublisher/to/property[@name=\"receiverURL\"]"
-        current_value: "tcp://localhost:7612"
-        new_value: "tcp://{{ is_analytics_hostname }}:7612"
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ is_analytics_hostname }}:7612"
+  # wso2is-analytics-dashboard   
   - file_path: "roles/is-analytics-dashboard/templates/carbon-home/conf/dashboard/deployment.yaml.j2"
     relative_path: "{$arg.wso2is-analytics}/conf/dashboard/deployment.yaml"
-    file_type: xml
+    file_type: yaml
     configurations:
       - operation: replace
         xpath: "wso2.carbon/id"
-        current_value: "wso2-analytics-is"
-        new_value: "{{ server_id }}"
+        value: "{{ server_id }}"
       - operation: replace
         xpath: "wso2.carbon/ports/offset"
-        current_value: "2"
-        new_value: "{{ ports_offset }}"
+        value: "{{ ports_offset }}"
       - operation: replace
         xpath: "databridge.config/workerThreads"
-        current_value: "10"
-        new_value: "{{ worker_threads }}"     
+        value: "{{ worker_threads }}"     
       - operation: replace
         xpath: "databridge.config/keyStoreLocation"
-        current_value: "${sys:carbon.home}/resources/security/wso2carbon.jks"
-        new_value: "{{ databridge_config_keystore_location }}"    
+        value: "{{ databridge_config_keystore_location }}"    
       - operation: replace
         xpath: "databridge.config/keyStorePassword"
-        current_value: "wso2carbon"
-        new_value: "{{ databridge_config_keystore_password }}"                
+        value: "{{ databridge_config_keystore_password }}"                
       - operation: replace
         xpath: "databridge.config/keyStorePassword"
-        current_value: "wso2carbon"
-        new_value: "{{ databridge_config_keystore_password }}"  
+        value: "{{ databridge_config_keystore_password }}"  
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Thrift\"]/properties/tcpPort"
+        value: "{{ thrift_data_receiver_tcp_port }}"         
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Thrift\"]/properties/sslPort"
+        value: "{{ thrift_data_receiver_ssl_port }}" 
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/tcpPort"
+        value: "{{ binary_data_receiver_tcp_port }}"         
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/sslPort"
+        value: "{{ binary_data_receiver_ssl_port }}" 
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/hostName"
+        value: "{{ hostname }}" 
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Thrift\"]/trustStorePath"
+        value: "{{ truststore_path }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Thrift\"]/trustStorePassword"
+        value: "{{ truststore_password }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Binary\"]/trustStorePath"
+        value: "{{ truststore_path }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Binary\"]/trustStorePassword"
+        value: "{{ truststore_password }}"
+      - operation: replace
+        xpath: "state.persistence/enabled"
+        value: "{{ state_persistence_enabled }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/privateKeyAlias"
+        value: "{{ securevault_private_key_alias }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/keystoreLocation"
+        value: "{{ securevault_keystore_location }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/secretPropertiesFile"
+        value: "{{ secret_properties_file }}"        
+      - operation: replace
+        xpath: "wso2.securevault/masterKeyReader/parameters/masterKeyReaderFile"
+        value: "{{ master_key_reader_file }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ wso2_metrics_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/username"
+        value: "{{ wso2_metrics_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/password"
+        value: "{{ wso2_metrics_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ wso2_metrics_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ wso2_permissions_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/username"
+        value: "{{ wso2_permissions_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/password"
+        value: "{{ wso2_permissions_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ wso2_permissions_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ message_tracing_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/username"
+        value: "{{ message_tracing_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/password"
+        value: "{{ message_tracing_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/driverClassName"
+        value: "{{ message_tracing_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ is_analytics_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/username"
+        value: "{{ is_analytics_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/password"
+        value: "{{ is_analytics_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ is_analytics_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ is_analytics_db_url }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/host"
+        value: "{{ hostname }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/port"
+        value: "{{ listener_configurations_default_port }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/keyStoreFile"
+        value: "{{ listener_configurations_keystore_file }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/keyStorePassword"
+        value: "{{ listener_configurations_keystore_password }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/certPass"
+        value: "{{ listener_configurations_keystore_cert_password }}"
+  - file_path: "roles/is-analytics-dashboard/templates/carbon-home/conf/dashboard/deployment.yaml.j2"
+    relative_path: "{$arg.wso2is-analytics}/conf/dashboard/deployment.yaml"
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "localhost:9443:"
+        new_value: "{{ analytics_worker_node_ip }}:{{ analytics_worker_node_http_port }}:"        
+  
