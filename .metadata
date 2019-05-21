@@ -34,7 +34,7 @@ files:
     configurations:
       - operation: add
         xpath: "cygwin=false;"
-        value: "export JAVA_HOME={{ java_home }}; \\\n"
+        value: "export JAVA_HOME={{ java_home }};\n"
   - file_path: roles/is/templates/carbon-home/repository/conf/tomcat/catalina-server.xml.j2
     relative_path: "{$arg.wso2is}/repository/conf/tomcat/catalina-server.xml"
     file_type: xml
@@ -245,9 +245,6 @@ files:
         xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/driverClassName"
         value: "{{ is_analytics_db_driver_class_name }}"
       - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
-        value: "{{ is_analytics_db_url }}"
-      - operation: replace
         xpath: "wso2.transport.http/listenerConfigurations[id=\"default-https\"]/host"
         value: "{{ hostname }}"
       - operation: replace
@@ -268,5 +265,152 @@ files:
     configurations:
       - operation: replace
         current_value: "localhost:9443:"
-        new_value: "{{ analytics_worker_node_ip }}:{{ analytics_worker_node_http_port }}:"        
-  
+        new_value: "{{ analytics_worker_node_ip }}:{{ analytics_worker_node_http_port }}:"
+  - file_path: roles/is-analytics-dashboard/templates/carbon-home/wso2/dashboard/bin/carbon.sh.j2
+    relative_path: "{$arg.wso2is-analytics}/wso2/dashboard/bin/carbon.sh"
+    file_type: sh
+    configurations:
+      - operation: add
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }};\n"
+  # wso2is-analytics-worker   
+  - file_path: "roles/is-analytics-worker/templates/carbon-home/conf/worker/deployment.yaml.j2"
+    relative_path: "{$arg.wso2is-analytics}/conf/worker/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: replace
+        xpath: "wso2.carbon/id"
+        value: "{{ server_id }}"
+      - operation: replace
+        xpath: "wso2.carbon/ports/offset"
+        value: "{{ ports_offset }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default\"]/host"
+        value: "{{ hostname }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"default\"]/port"
+        value: "{{ listener_configurations_default_port }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"msf4j-https\"]/host"
+        value: "{{ hostname }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"msf4j-https\"]/port"
+        value: "{{ listener_configurations_msf4j_port }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"msf4j-https\"]/keyStoreFile"
+        value: "{{ listener_configurations_keystore_file }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"msf4j-https\"]/keyStorePassword"
+        value: "{{ listener_configurations_keystore_password }}"
+      - operation: replace
+        xpath: "wso2.transport.http/listenerConfigurations[id=\"msf4j-https\"]/certPass"
+        value: "{{ listener_configurations_keystore_cert_password }}"
+      - operation: replace
+        xpath: "databridge.config/workerThreads"
+        value: "{{ worker_threads }}"
+      - operation: replace
+        xpath: "databridge.config/keyStoreLocation"
+        value: "{{ databridge_config_keystore_location }}"
+      - operation: replace
+        xpath: "databridge.config/keyStorePassword"
+        value: "{{ databridge_config_keystore_password }}"
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Thrift\"]/properties/tcpPort"
+        value: "{{ thrift_data_receiver_tcp_port }}"         
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Thrift\"]/properties/sslPort"
+        value: "{{ thrift_data_receiver_ssl_port }}" 
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/tcpPort"
+        value: "{{ binary_data_receiver_tcp_port }}"         
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/sslPort"
+        value: "{{ binary_data_receiver_ssl_port }}" 
+      - operation: replace
+        xpath: "databridge.config/dataReceivers/dataReceiver[type=\"Binary\"]/properties/hostName"
+        value: "{{ hostname }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Thrift\"]/trustStorePath"
+        value: "{{ truststore_path }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Thrift\"]/trustStorePassword"
+        value: "{{ truststore_password }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Binary\"]/trustStorePath"
+        value: "{{ truststore_path }}"
+      - operation: replace
+        xpath: "data.agent.config/agents/agentConfiguration[name=\"Binary\"]/trustStorePassword"
+        value: "{{ truststore_password }}"
+      - operation: replace
+        xpath: "state.persistence/enabled"
+        value: "{{ state_persistence_enabled }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/privateKeyAlias"
+        value: "{{ securevault_private_key_alias }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/keystoreLocation"
+        value: "{{ securevault_keystore_location }}"
+      - operation: replace
+        xpath: "wso2.securevault/secretRepository/parameters/secretPropertiesFile"
+        value: "{{ secret_properties_file }}"        
+      - operation: replace
+        xpath: "wso2.securevault/masterKeyReader/parameters/masterKeyReaderFile"
+        value: "{{ master_key_reader_file }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ wso2_metrics_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/username"
+        value: "{{ wso2_metrics_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/password"
+        value: "{{ wso2_metrics_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_METRICS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ wso2_metrics_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ wso2_permissions_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/username"
+        value: "{{ wso2_permissions_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/password"
+        value: "{{ wso2_permissions_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ wso2_permissions_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ message_tracing_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/username"
+        value: "{{ message_tracing_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/password"
+        value: "{{ message_tracing_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/driverClassName"
+        value: "{{ message_tracing_db_driver_class_name }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
+        value: "{{ is_analytics_db_url }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/username"
+        value: "{{ is_analytics_db_username }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/password"
+        value: "{{ is_analytics_db_password }}"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/driverClassName"
+        value: "{{ is_analytics_db_driver_class_name }}"
+      - operation: replace
+        xpath: "cluster.config/enabled"
+        value: "{{ cluster_config_enabled }}"
+  - file_path: roles/is-analytics-worker/templates/carbon-home/wso2/worker/bin/carbon.sh.j2
+    relative_path: "{$arg.wso2is-analytics}/wso2/worker/bin/carbon.sh"
+    file_type: sh
+    configurations:
+      - operation: add
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }};\n"      
