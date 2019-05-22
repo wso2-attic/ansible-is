@@ -16,8 +16,8 @@
 
 # command line arguments
 params:
-    wso2is: wso2is-5.7.0
-    wso2is-analytics: wso2is-analytics-5.7.0
+    wso2is: wso2is-5.8.0
+    wso2is-analytics: wso2is-analytics-5.8.0
     existing_version_wso2is: 5.7.0
     new_version_wso2is: 5.8.0
     existing_version_wso2is-analytics: 5.7.0
@@ -35,6 +35,16 @@ files:
       - operation: add
         xpath: "cygwin=false;"
         value: "export JAVA_HOME={{ java_home }};\n"
+  - file_path: identity-server/confs/repository/conf/identity/identity-event.properties
+    relative_path: "{$arg.wso2is}/repository/conf/identity/identity-event.properties"
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "analyticsLoginDataPublisher.enable=false"
+        new_value: "analyticsLoginDataPublisher.enable=true"
+      - operation: replace
+        current_value: "analyticsSessionDataPublisher.enable=false"
+        new_value: "analyticsSessionDataPublisher.enable=true"
   - file_path: roles/is/templates/carbon-home/repository/conf/tomcat/catalina-server.xml.j2
     relative_path: "{$arg.wso2is}/repository/conf/tomcat/catalina-server.xml"
     file_type: xml
@@ -221,18 +231,6 @@ files:
         xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/driverClassName"
         value: "{{ wso2_permissions_db_driver_class_name }}"
       - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/jdbcUrl"
-        value: "{{ message_tracing_db_url }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/username"
-        value: "{{ message_tracing_db_username }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/password"
-        value: "{{ message_tracing_db_password }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/driverClassName"
-        value: "{{ message_tracing_db_driver_class_name }}"
-      - operation: replace
         xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
         value: "{{ is_analytics_db_url }}"
       - operation: replace
@@ -380,18 +378,6 @@ files:
       - operation: replace
         xpath: "wso2.datasources/dataSources[name=\"WSO2_PERMISSIONS_DB\"]/definition/configuration/driverClassName"
         value: "{{ wso2_permissions_db_driver_class_name }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/jdbcUrl"
-        value: "{{ message_tracing_db_url }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/username"
-        value: "{{ message_tracing_db_username }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/password"
-        value: "{{ message_tracing_db_password }}"
-      - operation: replace
-        xpath: "wso2.datasources/dataSources[name=\"Message_Tracing_DB\"]/definition/configuration/driverClassName"
-        value: "{{ message_tracing_db_driver_class_name }}"
       - operation: replace
         xpath: "wso2.datasources/dataSources[name=\"IS_ANALYTICS_DB\"]/definition/configuration/jdbcUrl"
         value: "{{ is_analytics_db_url }}"
