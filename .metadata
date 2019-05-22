@@ -18,16 +18,72 @@
 params:
     wso2is: wso2is-5.8.0
     wso2is-analytics: wso2is-analytics-5.8.0
-    existing_version_wso2is: 5.7.0
-    new_version_wso2is: 5.8.0
-    existing_version_wso2is-analytics: 5.7.0
-    new_version_wso2is-analytics: 5.8.0
     existing_version: 5.7.0
     new_version: 5.8.0
+    existing_wso2is_installer_deb: wso2is-linux-installer-x64-5.7.0.deb
+    new_wso2is_installer_deb: wso2is-linux-installer-x64-5.8.0.deb
+    existing_wso2is_installer_rpm: wso2is-linux-installer-x64-5.7.0.rpm
+    new_wso2is_installer_rpm: wso2is-linux-installer-x64-5.8.0.rpm
+    existing_wso2is_analytics_installer_deb: wso2is-analytics-linux-installer-x64-5.7.0.deb
+    new_wso2is_analytics_installer_deb: wso2is-analytics-linux-installer-x64-5.8.0.deb
+    existing_wso2is_analytics_installer_rpm: wso2is-analytics-linux-installer-x64-5.7.0.rpm
+    new_wso2is_analytics_installer_rpm: wso2is-analytics-linux-installer-x64-5.8.0.rpm
+    exiting_wso2is_package_name: WSO2 Identity Server 5.7.0 package
+    new_wso2is_package_name: WSO2 Identity Server 5.8.0 package
+    exiting_wso2is_analytics_package_name: WSO2 Identity Server Analytics 5.7.0 package
+    new_wso2is_analytics_package_name: WSO2 Identity Server Analytics 5.8.0 package
 
 # files based configurations
 # wso2is
 files:
+  - file_path: "README.md"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_installer_deb}"
+        new_value: "{$arg.new_wso2is_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_installer_rpm}"
+        new_value: "{$arg.new_wso2is_installer_rpm}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_analytics_installer_deb}"
+        new_value: "{$arg.new_wso2is_analytics_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_analytics_installer_rpm}"
+        new_value: "{$arg.new_wso2is_analytics_installer_rpm}"
+      - operation: "replace"
+        current_value: "{$arg.exiting_wso2is_package_name}"
+        new_value: "{$arg.new_wso2is_package_name}"
+      - operation: "replace"
+        current_value: "{$arg.exiting_wso2is_analytics_package_name}"
+        new_value: "{$arg.new_wso2is_analytics_package_name}"
+  - file_path: "dev/group_vars/is.yml"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "product_version: {$arg.existing_version}"
+        new_value: "product_version: {$arg.new_version}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_installer_deb}"
+        new_value: "{$arg.new_wso2is_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_installer_rpm}"
+        new_value: "{$arg.new_wso2is_installer_rpm}"
+  - file_path: "dev/group_vars/is-analytics.yml"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "product_version: {$arg.existing_version}"
+        new_value: "product_version: {$arg.new_version}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_analytics_installer_deb}"
+        new_value: "{$arg.new_wso2is_analytics_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2is_analytics_installer_rpm}"
+        new_value: "{$arg.new_wso2is_analytics_installer_rpm}"
   - file_path: roles/is/templates/carbon-home/bin/wso2server.sh.j2
     relative_path: "{$arg.wso2is}/bin/wso2server.sh"
     file_type: sh

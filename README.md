@@ -30,10 +30,10 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   └── Pattern2.md
 ├── files
 │   ├── mysql-connector-java-5.1.45-bin.jar
-│   ├── wso2is-analytics-linux-installer-x64-5.7.0.deb
-│   ├── wso2is-analytics-linux-installer-x64-5.7.0.rpm
-│   ├── wso2is-linux-installer-x64-5.7.0.deb
-│   └── wso2is-linux-installer-x64-5.7.0.rpm
+│   ├── wso2is-analytics-linux-installer-x64-5.8.0.deb
+│   ├── wso2is-analytics-linux-installer-x64-5.8.0.rpm
+│   ├── wso2is-linux-installer-x64-5.8.0.deb
+│   └── wso2is-linux-installer-x64-5.8.0.rpm
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -109,8 +109,8 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 Copy the following files to `files` directory.
 
-1. [WSO2 Identity Server 5.7.0 package](https://wso2.com/identity-and-access-management/install)
-2. [WSO2 Identity Server Analytics 5.7.0 package](https://wso2.com/identity-and-access-management/install/analytics/)
+1. [WSO2 Identity Server 5.8.0 package](https://wso2.com/identity-and-access-management/install)
+2. [WSO2 Identity Server Analytics 5.8.0 package](https://wso2.com/identity-and-access-management/install/analytics/)
 3. [mysql-connector-java-5.1.45-bin.jar](https://dev.mysql.com/downloads/connector/j/5.1.html)
 
 ## Running WSO2 Identity Server Ansible scripts

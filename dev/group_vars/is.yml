@@ -19,10 +19,10 @@ wso2_user: wso2carbon
 deb_setup_path: /usr/lib/wso2
 rpm_setup_path: /usr/lib64/wso2
 product_name: wso2is
-product_version: 5.7.0
+product_version: 5.8.0
 product_path: /opt/wso2
-product_archive_deb: wso2is-linux-installer-x64-5.7.0.deb
-product_archive_rpm: wso2is-linux-installer-x64-5.7.0.rpm
+product_archive_deb: wso2is-linux-installer-x64-5.8.0.deb
+product_archive_rpm: wso2is-linux-installer-x64-5.8.0.rpm
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.45-bin.jar
 
