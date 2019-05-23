@@ -28,10 +28,6 @@ params:
     new_wso2is_analytics_installer_deb: wso2is-analytics-linux-installer-x64-5.8.0.deb
     existing_wso2is_analytics_installer_rpm: wso2is-analytics-linux-installer-x64-5.7.0.rpm
     new_wso2is_analytics_installer_rpm: wso2is-analytics-linux-installer-x64-5.8.0.rpm
-    exiting_wso2is_package_name: WSO2 Identity Server 5.7.0 package
-    new_wso2is_package_name: WSO2 Identity Server 5.8.0 package
-    exiting_wso2is_analytics_package_name: WSO2 Identity Server Analytics 5.7.0 package
-    new_wso2is_analytics_package_name: WSO2 Identity Server Analytics 5.8.0 package
 
 # files based configurations
 # wso2is
@@ -52,12 +48,6 @@ files:
       - operation: "replace"
         current_value: "{$arg.existing_wso2is_analytics_installer_rpm}"
         new_value: "{$arg.new_wso2is_analytics_installer_rpm}"
-      - operation: "replace"
-        current_value: "{$arg.exiting_wso2is_package_name}"
-        new_value: "{$arg.new_wso2is_package_name}"
-      - operation: "replace"
-        current_value: "{$arg.exiting_wso2is_analytics_package_name}"
-        new_value: "{$arg.new_wso2is_analytics_package_name}"
   - file_path: "dev/group_vars/is.yml"
     relative_path: ~
     file_type: "txt"
