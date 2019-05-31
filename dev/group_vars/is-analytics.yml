@@ -16,15 +16,18 @@
 
 wso2_group: wso2
 wso2_user: wso2carbon
-deb_setup_path: /usr/lib/wso2
-rpm_setup_path: /usr/lib64/wso2
 product_name: wso2is-analytics
 product_version: 5.8.0
-product_path: /opt/wso2
-product_archive_deb: wso2is-analytics-linux-installer-x64-5.8.0.deb
-product_archive_rpm: wso2is-analytics-linux-installer-x64-5.8.0.rpm
+product_path: /usr/local/wso2
 product_package_location: files
-jdbc_driver: mysql-connector-java-5.1.45-bin.jar
+jdbc_driver: mysql-connector-java-5.1.47-bin.jar
+
+jdk_name: amazon-corretto-8.202.08.2-linux-x64
+deb_lib_dir: /usr/lib/wso2
+rpm_lib_dir: /usr/lib64/wso2
+
+distribution_path: "{{ product_path }}/{{ product_name }}/{{ product_version }}"
+install_path: "{{distribution_path}}/{{product_name}}-{{product_version}}"
 
 analytics_worker_node_ip: localhost
 analytics_worker_node_http_port: 9443
