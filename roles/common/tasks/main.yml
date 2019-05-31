@@ -21,11 +21,10 @@
     - name: Add wso2carbon user
       user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present uid=802
 
-    - name: Create WSO2 directory
-      file:
-        path: /opt/wso2
-        state: directory
-        mode: 0755
+    - name: Install Unzip package
+      package:
+        name: unzip
+        state: present
 
     become: true
     become_user: root
