@@ -90,11 +90,11 @@
         src: wso2is-analytics-worker.service.j2
         dest: /etc/systemd/system/wso2is-analytics-worker.service
 
-    - name: Reload systemctl daemon
-      command: systemctl daemon-reload
-
     - name: Start wso2is-analytics-worker as a service
-      command: systemctl start wso2is-analytics-worker.service
+      systemd:
+        name: wso2is-analytics-worker
+        state: started
+        daemon_reload: yes
 
     become: true
     become_user: root
