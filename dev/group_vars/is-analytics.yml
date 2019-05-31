@@ -22,10 +22,12 @@ product_path: /usr/local/wso2
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.47-bin.jar
 
+# JDK Distributions
 jdk_name: amazon-corretto-8.202.08.2-linux-x64
 deb_lib_dir: /usr/lib/wso2
 rpm_lib_dir: /usr/lib64/wso2
 
+# Installation directory information
 distribution_path: "{{ product_path }}/{{ product_name }}/{{ product_version }}"
 install_path: "{{distribution_path}}/{{product_name}}-{{product_version}}"
 
