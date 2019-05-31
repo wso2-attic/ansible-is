@@ -52,20 +52,16 @@
         dest: "{{ distribution_path }}"
         mode: u=rw,g=r,o=r
 
-    - name: "Copy JDBC Driver"
+    - name: Copy JDBC Driver
       copy:
        src: "files/{{ jdbc_driver }}"
        dest: "{{ install_path }}/lib"
 
-    - name: "Copy deployment.yaml"
+    - name: Copy configuration templates
       template:
-        src: "carbon-home/conf/worker/deployment.yaml.j2"
-        dest: "{{ install_path }}/conf/worker/deployment.yaml"
-
-    - name: "Copy carbon.sh"
-      template:
-        src: "carbon-home/wso2/worker/bin/carbon.sh.j2"
-        dest: "{{ install_path }}/wso2/worker/bin/carbon.sh"
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ worker_config_files }}"
 
     - name: Change the owner of WSO2 directory
       file:
