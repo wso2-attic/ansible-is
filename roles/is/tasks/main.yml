@@ -28,15 +28,25 @@
         state: directory
         mode: 0755
 
+    - name: Stop wso2is as a service
+      systemd:
+        name: wso2is
+        state: stopped
+
+    - name: Remove existing setup
+      file:
+        path: "{{ carbon_home }}"
+        state: absent
+
     - name: Unzip WSO2 Identity Server Package
       unarchive:
-        src: "{{ product_package_location }}/{{ product_name }}-{{ product_version }}.zip"
+        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
 
     - name: Copy JDBC Driver
       copy:
-       src: "files/{{ jdbc_driver }}"
+       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
        dest: "{{ carbon_home }}/repository/components/lib"
 
     - name: Copy configuration templates
