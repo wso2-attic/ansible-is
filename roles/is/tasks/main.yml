@@ -44,10 +44,10 @@
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
 
-    - name: Copy JDBC Driver
-      copy:
-       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
-       dest: "{{ carbon_home }}/repository/components/lib"
+#    - name: Copy JDBC Driver
+#      copy:
+#       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+#       dest: "{{ carbon_home }}/repository/components/lib"
 
     - name: Copy configuration templates
       template:
