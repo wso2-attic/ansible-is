@@ -30,7 +30,7 @@
 
     - name: Stop is-analytics-dashboard as a service
       systemd:
-        name: is-analytics-dashboard
+        name: wso2is-analytics-dashboard
         state: stopped
 
     - name: Remove existing setup
@@ -44,10 +44,10 @@
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
 
-    - name: Copy JDBC Driver
-      copy:
-       src: "files/lib/{{ jdbc_driver }}"
-       dest: "{{ carbon_home }}/lib"
+#    - name: Copy JDBC Driver
+#      copy:
+#       src: "files/lib/{{ jdbc_driver }}"
+#       dest: "{{ carbon_home }}/lib"
 
     - name: Copy configuration templates
       template:
