@@ -23,7 +23,6 @@
 hs_err_pid*
 
 # Packages inside files folder
-files/*
 !files/.gitkeep
 
 # Auto-generated .retry files
