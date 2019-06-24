@@ -28,6 +28,11 @@
         state: directory
         mode: 0755
 
+    - name: Copy WSO2 IS Analytics worker service file
+      template:
+        src: wso2is-analytics-worker.service.j2
+        dest: /etc/systemd/system/wso2is-analytics-worker.service
+
     - name: Stop is-analytics-worker as a service
       systemd:
         name: wso2is-analytics-worker
@@ -73,11 +78,6 @@
       # - import_tasks: custom.yml
 
   - block:
-    - name: Copy WSO2 IS Analytics worker service file
-      template:
-        src: wso2is-analytics-worker.service.j2
-        dest: /etc/systemd/system/wso2is-analytics-worker.service
-
     - name: Start wso2is-analytics-worker as a service
       systemd:
         name: wso2is-analytics-worker
