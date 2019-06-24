@@ -28,6 +28,11 @@
         state: directory
         mode: 0755
 
+    - name: Copy WSO2IS Analytics dashboard service file
+      template:
+        src: wso2is-analytics-dashboard.service.j2
+        dest: /etc/systemd/system/wso2is-analytics-dashboard.service
+
     - name: Stop is-analytics-dashboard as a service
       systemd:
         name: wso2is-analytics-dashboard
@@ -74,11 +79,6 @@
 
 
   - block:
-    - name: Copy WSO2IS Analytics dashboard service file
-      template:
-        src: wso2is-analytics-dashboard.service.j2
-        dest: /etc/systemd/system/wso2is-analytics-dashboard.service
-
     - name: Start wso2is-analytics-dashboard as a service
       systemd:
         name: wso2is-analytics-dashboard
