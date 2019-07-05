@@ -21,6 +21,13 @@
     - name: Add wso2carbon user
       user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present uid=802
 
+    - name: System performance tuning
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ performance_tuning_file_list }}"
+      when: enable_performance_tuning
+
     - name: Create Java directory
       file:
         path: "{{ java_dir }}"
