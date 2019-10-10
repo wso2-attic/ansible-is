@@ -44,18 +44,21 @@ java_home: "{{ java_dir }}/{{ jdk_name }}"
 
 is_analytics_hostname: localhost
 
+# Data source configurations for the shared database which hosts registry and user management tables
 wso2is_shared_db_type: h2
 wso2is_shared_db_url: jdbc:h2:./repository/database/WSO2SHARED_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
 wso2is_shared_db_username: wso2carbon
 wso2is_shared_db_password: wso2carbon
 wso2is_shared_db_validation_query: "SELECT 1"
 
+# Data source configurations for the database which hosts identity tables
 wso2is_identity_db_type: h2
 wso2is_identity_db_url: jdbc:h2:./repository/database/WSO2IDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
 wso2is_identity_db_username: wso2carbon
 wso2is_identity_db_password: wso2carbon
 wso2is_identity_db_validation_query: "SELECT 1"
 
+# Data source configurations for the database which hosts workflow (WSO2 product BPS) tables
 wso2is_bps_db_type: h2
 wso2is_bps_db_url: jdbc:h2:file:./repository/database/jpadb;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE
 wso2is_bps_db_username: wso2carbon
@@ -63,6 +66,7 @@ wso2is_bps_db_password: wso2carbon
 wso2is_bps_db_driver: org.h2.Driver
 wso2is_bps_db_validation_query: "SELECT 1"
 
+# Data source configurations for the database which hosts consent management tables
 wso2is_consent_db_id: WSO2ConsentDS
 wso2is_consent_db_type: h2
 wso2is_consent_db_url: jdbc:h2:./repository/database/WSO2IDENTITY_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
@@ -71,6 +75,7 @@ wso2is_consent_db_password: wso2carbon
 wso2is_consent_db_driver: org.h2.Driver
 wso2is_consent_db_validation_query: "SELECT 1"
 
+# Enable statistic publishing
 wso2is_enable_event_listener: true
 wso2is_enable_handler_for_login_stats: false
 wso2is_enable_handler_for_session_stats: false
