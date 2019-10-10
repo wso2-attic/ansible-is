@@ -24,3 +24,6 @@ hs_err_pid*
 
 # Auto-generated .retry files
 *.retry
+
+# IntelliJ IDEA specific metadata
+.idea/
