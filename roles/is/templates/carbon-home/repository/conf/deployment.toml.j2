@@ -22,7 +22,7 @@ url = "{{ wso2is_identity_db_url }}"
 username = "{{ wso2is_identity_db_username }}"
 password = "{{ wso2is_identity_db_password }}"
 [database.identity_db.pool_options]
-validationQuery = {{ wso2is_identity_db_validation_query }}
+validationQuery = "{{ wso2is_identity_db_validation_query }}"
 
 [database.shared_db]
 type = "{{ wso2is_shared_db_type }}"
@@ -51,13 +51,13 @@ driver = "{{ wso2is_consent_db_driver }}"
 pool_options.validationQuery = "{{ wso2is_consent_db_validation_query }}"
 
 [event.default_listener.application_authentication]
-enable = {{ wso2is_enable_event_listener }}
+enable = "{{ wso2is_enable_event_listener }}"
 
 [identity_mgt.events.schemes.analyticsLoginDataPublisher.properties]
-enable = {{ wso2is_enable_handler_for_login_stats }}
+enable = "{{ wso2is_enable_handler_for_login_stats }}"
 
 [identity_mgt.events.schemes.analyticsSessionDataPublisher.properties]
-enable = {{ wso2is_enable_handler_for_session_stats }}
+enable = "{{ wso2is_enable_handler_for_session_stats }}"
 
 [keystore.primary]
 name = "{{ keystore_location }}"
