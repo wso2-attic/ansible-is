@@ -33,7 +33,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   ├── amazon-corretto-8.202.08.2-linux-x64.tar.gz
 │   │   └── mysql-connector-java-5.1.47-bin.jar
 │   └── packs
-│       ├── wso2is-5.8.0.zip
+│       ├── wso2is-5.9.0.zip
 │       └── wso2is-analytics-5.8.0.zip
 ├── issue_template.md
 ├── LICENSE
@@ -115,7 +115,7 @@ Packs could be either copied to a local directory, or downloaded from a remote l
 
 Copy the following files to `files/packs` directory.
 
-1. [WSO2 Identity Server 5.8.0 package](https://wso2.com/identity-and-access-management/install)
+1. [WSO2 Identity Server 5.9.0 package](https://wso2.com/identity-and-access-management/install)
 2. [WSO2 Identity Server Analytics 5.8.0 package](https://wso2.com/identity-and-access-management/install/analytics/)
 
 Copy the following files to `files/lib` directory.
