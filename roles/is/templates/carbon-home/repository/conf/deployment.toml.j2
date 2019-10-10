@@ -1,0 +1,79 @@
+[server]
+hostname = "{{ hostname }}"
+node_ip = "127.0.0.1"
+base_path = "https://$ref{server.hostname}:${carbon.management.port}"
+offset = {{ port_offset }}
+
+[super_admin]
+username = "admin"
+password = "admin"
+create_admin_account = true
+
+[user_store]
+type = "read_write_ldap"
+connection_url = "ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}"
+connection_name = "uid=admin,ou=system"
+connection_password = "admin"
+base_dn = "dc=wso2,dc=org"      #refers the base dn on which the user and group search bases will be generated
+
+[database.identity_db]
+type = "{{ wso2is_identity_db_type }}"
+url = "{{ wso2is_identity_db_url }}"
+username = "{{ wso2is_identity_db_username }}"
+password = "{{ wso2is_identity_db_password }}"
+[database.identity_db.pool_options]
+validationQuery = {{ wso2is_identity_db_validation_query }}
+
+[database.shared_db]
+type = "{{ wso2is_shared_db_type }}"
+url = "{{ wso2is_shared_db_url }}"
+username = "{{ wso2is_shared_db_username }}"
+password = "{{ wso2is_shared_db_password }}"
+[database.shared_db.pool_options]
+validationQuery = "{{ wso2is_shared_db_validation_query }}"
+
+[database.bps_database]
+type = "{{ wso2is_bps_db_type }}"
+url = "{{ wso2is_bps_db_url }}"
+username = "{{ wso2is_bps_db_username }}"
+password = "{{ wso2is_bps_db_password }}"
+driver = "{{ wso2is_bps_db_driver }}"
+[database.bps_database.pool_options]
+validationQuery = "{{ wso2is_bps_db_validation_query }}"
+
+[[datasource]]
+id = "{{ wso2is_consent_db_id }}"
+type = "{{ wso2is_consent_db_type }}"
+url = "{{ wso2is_consent_db_url }}"
+username = "{{ wso2is_consent_db_username }}"
+password = "{{ wso2is_consent_db_password }}"
+driver = "{{ wso2is_consent_db_driver }}"
+pool_options.validationQuery = "{{ wso2is_consent_db_validation_query }}"
+
+[event.default_listener.application_authentication]
+enable = {{ wso2is_enable_event_listener }}
+
+[identity_mgt.events.schemes.analyticsLoginDataPublisher.properties]
+enable = {{ wso2is_enable_handler_for_login_stats }}
+
+[identity_mgt.events.schemes.analyticsSessionDataPublisher.properties]
+enable = {{ wso2is_enable_handler_for_session_stats }}
+
+[keystore.primary]
+name = "{{ keystore_location }}"
+type = "{{ keystore_type }}"
+password = "{{ keystore_password }}"
+alias = "{{ keystore_key_alias }}"
+key_password = "{{ keystore_key_password }}"
+
+[keystore.internal]
+filename = "{{ internal_keystore_location }}"
+type = "{{ internal_keystore_type }}"
+password = "{{ internal_keystore_password }}"
+alias = "{{ internal_keystore_key_alias }}"
+key_password = "{{ internal_keystore_key_password }}"
+
+[truststore]
+file_name = "{{ truststore_location }}"
+type = "{{ truststore_type }}"
+password = "{{ truststore_password }}"
