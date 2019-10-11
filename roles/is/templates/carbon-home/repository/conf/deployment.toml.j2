@@ -50,6 +50,9 @@ password = "{{ wso2is_consent_db_password }}"
 driver = "{{ wso2is_consent_db_driver }}"
 pool_options.validationQuery = "{{ wso2is_consent_db_validation_query }}"
 
+[authentication.consent]
+data_source="jdbc/{{ wso2is_consent_db_id }}"
+
 [event.default_listener.application_authentication]
 enable = "{{ wso2is_enable_event_listener }}"
 
