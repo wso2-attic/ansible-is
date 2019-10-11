@@ -77,3 +77,11 @@ key_password = "{{ internal_keystore_key_password }}"
 file_name = "{{ truststore_location }}"
 type = "{{ truststore_type }}"
 password = "{{ truststore_password }}"
+
+[transport.http.properties]
+maxThreads = "{{ catalina_server_connector_http_max_threads }}"
+acceptCount = "{{ catalina_server_connector_http_accept_count }}"
+
+[transport.https.properties]
+maxThreads = "{{ catalina_server_connector_https_max_threads }}"
+acceptCount = "{{ catalina_server_connector_https_accept_count }}"

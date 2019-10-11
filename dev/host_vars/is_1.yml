@@ -40,10 +40,10 @@ truststore_location: client-truststore.jks
 truststore_type: JKS
 truststore_password: wso2carbon
 
-## Configure proxy ports. Note that this is a optional attribute.
-## catalina_server_connector_http_proxy_port: 80
-#catalina_server_connector_http_max_threads: 250
-#catalina_server_connector_http_accept_count: 200
-## catalina_server_connector_https_proxy_port: 443
-#catalina_server_connector_https_max_threads: 250
-#catalina_server_connector_https_accept_count: 200
+# Configure proxy ports. Note that this is a optional attribute.
+# catalina_server_connector_http_proxy_port: 80
+catalina_server_connector_http_max_threads: 250
+catalina_server_connector_http_accept_count: 200
+# catalina_server_connector_https_proxy_port: 443
+catalina_server_connector_https_max_threads: 250
+catalina_server_connector_https_accept_count: 200
