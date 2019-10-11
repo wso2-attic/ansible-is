@@ -7,7 +7,7 @@ The update script is to be used by WSO2 subscription users such that products pa
 * [WUM](https://wso2.com/updates/wum) updated packs should be provided in the `/files/packs` directory
 
 `
-NOTE: Provided WUM updated packs should contain the latest updates for wso2is-5.8.0 and wso2is-analytics-5.8.0
+NOTE: Provided WUM updated packs should contain the latest updates for wso2is-5.9.0 and wso2is-analytics-5.8.0
 `
 
 ### Usage
