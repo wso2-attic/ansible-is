@@ -50,15 +50,8 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │           │   ├── bin
 │           │   │   └── wso2server.sh.j2
 │           │   └── repository
-│           │       ├── conf
-│           │       │   └── deployment.toml.j2
-│           │       └── deployment
-│           │           └── server
-│           │               └── eventpublishers
-│           │                   ├── IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2
-│           │                   ├── IsAnalytics-Publisher-wso2event-RoleData.xml.j2
-│           │                   ├── IsAnalytics-Publisher-wso2event-SessionData.xml.j2
-│           │                   └── IsAnalytics-Publisher-wso2event-UserData.xml.j2
+│           │       └── conf
+│           │           └── deployment.toml.j2
 │           └── wso2is.service.j2
 ├── scripts
 │   ├── update.sh
