@@ -22,7 +22,7 @@
 set -e
 
 # Build artifacts and is_analytics_versions
-: ${is_version:="5.9.0"}
+: ${is_version:="5.10.0"}
 : ${packs_dir:=$(pwd)/../files/packs/}
 
 usage() { echo "Usage: $0 -p <profile_name>" 1>&2; exit 1; }
@@ -99,37 +99,19 @@ then
 fi
 
 cd ${packs_dir}
-# Check if user has a WSO2 subscription
-while :
-do
-  read -p "Do you have a WSO2 subscription? (Y/n) "
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z "$REPLY" ]]
-  then
-    # The pack should not be unzipped if a conflict is being resolved
-    if [[ ${status} -ne 3 ]]
-    then
-        unzip_pack ${pack}
-    fi
 
-    if [[ ! -f ${carbon_home}/bin/update_linux ]]
-    then
-      echo "Update executable not found. Please download package for subscription users from website."
-      echo "Don't have a subscription yet? Sign up for a free-trial subscription at https://wso2.com/subscription/free-trial"
-      rm -rf ${packs_dir}/${pack}
-      exit 1
-    else
-      break
-    fi
-  elif [[ $REPLY =~ ^[Nn]$ ]]
-  then
-    echo "Don't have a subscription yet? Sign up for a free-trial subscription at https://wso2.com/subscription/free-trial"
-    exit 0
-  else
-    echo "Invalid input provided."
-    sleep .5
-  fi
-done
+# The pack should not be unzipped if a conflict is being resolved
+if [[ ${status} -ne 3 ]]
+then
+    unzip_pack ${pack}
+fi
+
+if [[ ! -f ${carbon_home}/bin/update_linux ]]
+then
+  echo "Update executable not found."
+  rm -rf ${packs_dir}/${pack}
+  exit 1
+fi
 
 # Move into binaries directory
 cd ${carbon_home}/bin

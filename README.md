@@ -105,7 +105,7 @@ If you need to alter the configurations given, please change the parameterized v
 
 The templates that are used by the Ansible scripts are in j2 format in-order to enable parameterization.
 
-The `axis2.xml.j2` file is added under `roles/is/templates/carbon-home/repositoy/conf/deployment.toml.j2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
+The `axis2.xml.j2` file is added under `roles/is/templates/carbon-home/repositoy/conf/axis2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
 
 #### Step 1
 Uncomment the following line in `main.yml` under the role you want to customize.
