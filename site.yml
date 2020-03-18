@@ -27,15 +27,3 @@
     - is_1
   roles:
     - is
-
-- name: Apply Analytics dashboard configuration to is-analytics-dashboard nodes
-  hosts:
-    - is-analytics-dashboard_1
-  roles:
-    - is-analytics-dashboard
-
-- name: Apply Analytics worker configuration to is-analytics-worker nodes
-  hosts:
-    - is-analytics-worker_1
-  roles:
-    - is-analytics-worker

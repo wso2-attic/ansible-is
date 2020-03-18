@@ -23,7 +23,6 @@ set -e
 
 # Build artifacts and is_analytics_versions
 : ${is_version:="5.9.0"}
-: ${is_analytics_version:="5.8.0"}
 : ${packs_dir:=$(pwd)/../files/packs/}
 
 usage() { echo "Usage: $0 -p <profile_name>" 1>&2; exit 1; }
@@ -68,23 +67,13 @@ fi
 
 # Set variables relevant to each profile
 case "${profile}" in
-    is-analytics-dashboard)
-        pack="wso2is-analytics-"${is_analytics_version}
-        updated_roles=("is-analytics-dashboard" "is-analytics-worker")
-        ;;
-    is-analytics-worker)
-        pack="wso2is-analytics-"${is_analytics_version}
-        updated_roles=("is-analytics-dashboard" "is-analytics-worker")
-        ;;
     is)
         pack="wso2is-"${is_version}
         updated_roles=("is")
         ;;
     *)
         echo "Invalid profile. Please provide one of the following profiles:
-            is
-            is-analytics-dashboard
-            is-analytics-worker"
+            is"
         exit 1
         ;;
 esac
