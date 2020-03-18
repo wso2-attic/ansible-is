@@ -16,11 +16,9 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 .
 ├── dev
 │   ├── group_vars
-│   │   ├── is-analytics.yml
 │   │   └── is.yml
 │   ├── host_vars
-│   │   ├── is_1.yml
-│   │   └── is-analytics_1.yml
+│   │   └── is_1.yml
 │   └── inventory
 ├── docs
 │   ├── images
@@ -33,8 +31,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   ├── amazon-corretto-8.222.10.1-linux-x64.tar.gz
 │   │   └── mysql-connector-java-5.1.47-bin.jar
 │   └── packs
-│       ├── wso2is-5.9.0.zip
-│       └── wso2is-analytics-5.8.0.zip
+│       └── wso2is-5.10.0.zip
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -44,65 +41,25 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   └── tasks
 │   │       ├── custom.yml
 │   │       └── main.yml
-│   ├── is
-│   │   ├── tasks
-│   │   │   ├── custom.yml
-│   │   │   └── main.yml
-│   │   └── templates
-│   │       ├── carbon-home
-│   │       │   ├── bin
-│   │       │   │   └── wso2server.sh.j2
-│   │       │   └── repository
-│   │       │       ├── conf
-│   │       │       │   ├── axis2
-│   │       │       │   │   └── axis2.xml.j2
-│   │       │       │   ├── carbon.xml.j2
-│   │       │       │   ├── datasources
-│   │       │       │   │   ├── bps-datasources.xml.j2
-│   │       │       │   │   ├── master-datasources.xml.j2
-│   │       │       │   │   └── metrics-datasources.xml.j2
-│   │       │       │   ├── identity
-│   │       │       │   │   └── identity.xml.j2
-│   │       │       │   ├── registry.xml.j2
-│   │       │       │   ├── tomcat
-│   │       │       │   │   └── catalina-server.xml.j2
-│   │       │       │   └── user-mgt.xml.j2
-│   │       │       └── deployment
-│   │       │           └── server
-│   │       │               └── eventpublishers
-│   │       │                   ├── IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2
-│   │       │                   ├── IsAnalytics-Publisher-wso2event-RoleData.xml.j2
-│   │       │                   ├── IsAnalytics-Publisher-wso2event-SessionData.xml.j2
-│   │       │                   └── IsAnalytics-Publisher-wso2event-UserData.xml.j2
-│   │       └── wso2is.service.j2
-│   ├── is-analytics-dashboard
-│   │   ├── tasks
-│   │   │   ├── custom.yml
-│   │   │   └── main.yml
-│   │   └── templates
-│   │       ├── carbon-home
-│   │       │   ├── conf
-│   │       │   │   └── dashboard
-│   │       │   │       └── deployment.yaml.j2
-│   │       │   └── wso2
-│   │       │       └── dashboard
-│   │       │           └── bin
-│   │       │               └── carbon.sh.j2
-│   │       └── wso2is-analytics-dashboard.service.j2
-│   └── is-analytics-worker
-│       ├── tasks
-│       │   ├── custom.yml
-│       │   └── main.yml
-│       └── templates
-│           ├── carbon-home
-│           │   ├── conf
-│           │   │   └── worker
-│           │   │       └── deployment.yaml.j2
-│           │   └── wso2
-│           │       └── worker
-│           │           └── bin
-│           │               └── carbon.sh.j2
-│           └── wso2is-analytics-worker.service.j2
+│   └── is
+│       ├── tasks
+│       │   ├── custom.yml
+│       │   └── main.yml
+│       └── templates
+│           ├── carbon-home
+│           │   ├── bin
+│           │   │   └── wso2server.sh.j2
+│           │   └── repository
+│           │       ├── conf
+│           │       │   └── deployment.toml.j2
+│           │       └── deployment
+│           │           └── server
+│           │               └── eventpublishers
+│           │                   ├── IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2
+│           │                   ├── IsAnalytics-Publisher-wso2event-RoleData.xml.j2
+│           │                   ├── IsAnalytics-Publisher-wso2event-SessionData.xml.j2
+│           │                   └── IsAnalytics-Publisher-wso2event-UserData.xml.j2
+│           └── wso2is.service.j2
 ├── scripts
 │   ├── update.sh
 │   └── update_README.md
@@ -115,8 +72,7 @@ Packs could be either copied to a local directory, or downloaded from a remote l
 
 Copy the following files to `files/packs` directory.
 
-1. [WSO2 Identity Server 5.9.0 package](https://wso2.com/identity-and-access-management/install)
-2. [WSO2 Identity Server Analytics 5.8.0 package](https://wso2.com/identity-and-access-management/install/analytics/)
+1. [WSO2 Identity Server 5.10.0 package](https://wso2.com/identity-and-access-management/install)
 
 Copy the following files to `files/lib` directory.
 
@@ -149,7 +105,7 @@ If you need to alter the configurations given, please change the parameterized v
 
 The templates that are used by the Ansible scripts are in j2 format in-order to enable parameterization.
 
-The `axis2.xml.j2` file is added under `roles/wso2is/templates/carbon-home/repositoy/conf/axis2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
+The `axis2.xml.j2` file is added under `roles/is/templates/carbon-home/repositoy/conf/deployment.toml.j2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
 
 #### Step 1
 Uncomment the following line in `main.yml` under the role you want to customize.
