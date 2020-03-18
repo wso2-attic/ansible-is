@@ -30,7 +30,7 @@
 
     - name: Create Java directory
       file:
-        path: "{{ jdk_name }}"
+        path: "{{ java_home }}"
         state: directory
 
     - name: Unarchive JDK distribution from local source
