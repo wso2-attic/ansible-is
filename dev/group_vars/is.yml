@@ -96,14 +96,6 @@ truststore_password: wso2carbon
 config_files:
   - { src: 'carbon-home/repository/conf/deployment.toml.j2',
       dest: '{{ carbon_home }}/repository/conf/deployment.toml' }
-  - { src: 'carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2',
-      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-AuthenticationData.xml.j2' }
-  - { src: 'carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml.j2',
-      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-RoleData.xml' }
-  - { src: 'carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml.j2',
-      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-SessionData.xml' }
-  - { src: 'carbon-home/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml.j2',
-      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/IsAnalytics-Publisher-wso2event-UserData.xml' }
   - { src: 'carbon-home/bin/wso2server.sh.j2',
       dest: '{{ carbon_home }}/bin/wso2server.sh' }
 
